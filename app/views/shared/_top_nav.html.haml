@@ -1,0 +1,21 @@
+#nav
+  %ul
+    %li.logo= link_to(image_tag("/images/floxee-small.png"), root_path)
+    %li.user-info
+      - if logged_in? 
+        %a{:href => twitter_user_url(current_user.login)}
+          = user_profile_image('mini', :class => 'avatar', :size => '24x24')
+          = t('greeting', :name => current_user.login)
+        %a{:href => logout_path}= t('sign_out')
+    %li
+      %a{ :href => '/'}= t('home')
+    %li
+      %a{ :href => '/tweetstream'}= t('tweetstream')
+    %li
+      %a{ :href => '/people'}= t('people')
+    %li
+      %a{ :href => '/stats'}= t('stats')
+    - if logged_in? and current_user.admin?
+      %li= link_to(t('admin'), admin_people_path)
+
+        

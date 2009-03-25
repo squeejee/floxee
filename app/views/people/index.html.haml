@@ -1,0 +1,12 @@
+= render :partial => 'search_form'
+%h1= t('people')
+= render :partial => 'shared/search_filter'
+- unless @people.empty?
+  .pagination-info= page_entries_info(@people)
+  = will_paginate(@people)
+  .people
+    - @people.each do |person|
+      .person{:id => person.id}
+        %h3= link_to (person.display_name, person_path(person.id))
+        = render :partial => 'people/person', :locals => {:person => person, :avatar_size => '64x64'}
+    

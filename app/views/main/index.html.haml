@@ -1,0 +1,43 @@
+#impact.box= render :partial => 'shared/impact'
+%br.clear
+
+#features.span-17
+  %h2 Floxee Features
+    
+  %ul
+    %li
+      Quickly build a directory of twitter users
+    %li
+      Out of the box search functionality
+    %li
+      Easily create sub-categories of people
+  
+  #getstarted
+    %a.button{ :href => 'http://github.com/squeejee/floxee', :target => '_blank', :title => 'Floxee on Github'}
+      Get Started with your own installation
+  %br
+  #gethelp
+    %h3
+      Want a directory without the hassle?
+    %p
+      If your company or organization would like a twitter directory without all the technical hassle of setting up your own floxee installation, then fly on over to
+      %a{ :href => 'http://floxee.com', :title => 'Floxee.com - Hosted twitter directories'}
+        Floxee.com.
+    %p
+      Floxee.com is our hosted twitter directory service. We've taken care of all the technical hurdles for you so all you need to do is step through our directory creation process and start adding people!
+    %p
+      %a.button{ :href => 'http://floxee.com', :title => 'Floxee.com - Hosted twitter directories'}
+        Get a hosted directory at Floxee.com
+.tweetstream.span-7.last
+  = render :partial => 'shared/tweetstream', :locals => {:limit => 5}
+  = link_to 'Older &raquo;', tweetstream_path(:page => 2), :class => 'more'
+%br.clear
+%style{:type => 'text/css'}
+  :sass
+    body
+      :background-image url(/images/branch.gif) 
+      :background-position center 260px 
+      :background-repeat no-repeat
+    li.logo
+      :display none !important
+      

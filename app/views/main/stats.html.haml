@@ -1,0 +1,9 @@
+%h1= t('stats')
+.span-17
+  %h2= t("most_followers_last_seven_days")
+  = render :partial => 'shared/bar_graph', :locals => {:stats => @most_new_seven_days}
+  %h2= t("most_followers_last_thirty_days")
+  = render :partial => 'shared/bar_graph', :locals => {:stats => @most_new_thirty_days}
+.span-7.last
+  = render :partial => 'shared/ranking', :locals => {:header => t('most_followed'), :tweeters => @most_followed, :stat_field => 'followers_count'}
+  = render :partial => 'shared/ranking', :locals => {:header => t('most_active'), :tweeters => @most_active, :stat_field => 'statuses_count' }

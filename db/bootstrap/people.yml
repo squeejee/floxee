@@ -1,0 +1,81 @@
+--- 
+wynn: 
+  id: "1"
+  nickname:
+  middle_name:
+  gender: M
+  first_name: Wynn
+  last_name: Netherland
+  name_suffix:
+  updated_at: 2008-12-15 18:46:58
+  created_at: 2008-12-15 18:46:58
+  email: 
+  screen_name: pengwynn
+  
+jim: 
+  id: "2"
+  nickname:
+  middle_name:
+  gender: M
+  first_name: Jim
+  last_name: Mulholland
+  name_suffix:
+  updated_at: 2008-12-15 18:46:58
+  created_at: 2008-12-15 18:46:58
+  email:
+  screen_name: mully
+
+    
+chris: 
+  id: "3"
+  nickname:
+  middle_name:
+  gender: M
+  first_name: Chris
+  last_name: McCroskey
+  name_suffix:
+  updated_at: 2008-12-15 18:46:58
+  created_at: 2008-12-15 18:46:58
+  email: 
+  screen_name: chrismccroskey
+
+jason: 
+  id: "4"
+  nickname:
+  middle_name:
+  gender: M
+  first_name: Jason
+  last_name: Derrett
+  name_suffix:
+  updated_at: 2008-12-15 18:46:58
+  created_at: 2008-12-15 18:46:58
+  email:
+  screen_name: jdirt
+    
+
+bradley: 
+  id: "5"
+  nickname:
+  middle_name:
+  gender: M
+  first_name: Bradley
+  last_name: Joyce
+  name_suffix:
+  updated_at: 2008-12-15 18:46:58
+  created_at: 2008-12-15 18:46:58
+  email:
+  screen_name: bradleyjoyce
+
+clee: 
+  id: "6"
+  nickname:
+  middle_name:
+  gender: M
+  first_name: Chris
+  last_name: Lee
+  name_suffix:
+  updated_at: 2008-12-15 18:46:58
+  created_at: 2008-12-15 18:46:58
+  email: 
+  screen_name: cglee
+

@@ -1,0 +1,515 @@
+@import blueprint.sass
+@import blueprint/modules/scaffolding.sass
+@import compass/reset.sass
+
++blueprint
+// Remove the scaffolding when you're ready to start doing visual design.
+// Or leave it in if you're happy with how blueprint looks out-of-the-box
++blueprint-scaffolding
+
+!lighter_blue = #D1E7FD
+!baby_blue = #b5dff8
+!darker_blue = #93BDDB
+!dark_blue = #142854
+!link_blue = #4691C9
+!leaf_green = #85c23f
+
+body
+  :margin 0
+  :padding 0
+  :background = !dark_blue
+  :color #111
+  
+  a
+    &:link,
+    &:visited,
+    &:active
+      :color = !link_blue
+      :text-decoration none
+      :border-bottom-style dotted 
+      :border-bottom-width 1px
+    &.more
+      :float right
+      
+  h1
+    :letter-spacing -1px
+    :font-weight bold
+    :font-size 2.5em
+    
+  .box
+    :background-color = !lighter_blue
+
+  .fl
+    :float left
+  .fr
+    :float right
+  .di
+    :display inline
+  .clear
+    :clear both
+  #topwrap
+    :background = !baby_blue
+  #header
+    :position relative
+    :clear both
+    :margin-bottom 0px
+    #nav
+      ul
+        :text-align right
+        :margin 1em 0 2em
+        :padding 0
+        li
+          :list-style none
+          :display inline
+          :margin-left 1em
+          :text-align center
+          :line-height 40px
+          a
+            :font-size 1.2em
+            :padding 5px 10px
+            :background-color = !darker_blue
+            :color #fff
+            :text-decoration none
+            :-moz-border-radius 5px
+            :-webkit-border-radius 5px
+            :border none
+            &:hover
+              :background-color = !dark_blue
+            &:focus
+              :outline none
+          &.logo
+            :float left
+            a,a:hover
+              :background-color transparent
+          &.user-info
+            a
+              :background transparent
+              :border none
+              :color #0E243D !important
+            img.avatar
+              :background-color #fff
+              :padding 2px
+              :border-style solid 
+              :border-color = !darker_blue
+              :border-width 1px
+              :vertical-align middle
+    #logo
+      :clear both
+      :position relative
+      :background url(/images/floxee-logo.png) left bottom no-repeat
+      
+      h1
+        a
+          :display block
+          :height 230px
+          :width 400px
+          :overflow hidden
+          :text-indent -9999px
+          :top -75px
+          :border none
+  #impact
+    :text-align center
+    :padding 2em 0
+    :position relative
+    :background-color = !lighter_blue
+    :background-color rgba(255,255,255,.3)
+    :-moz-border-radius 10px
+    :-webkit-border-radius 10px
+    img.logo
+      :position absolute
+      :top -50px
+      :left 0px
+    h1
+      :margin-bottom 0
+    p
+      :font-size 1.2em
+      :width 85%
+      :margin 0 auto
+      &.follow-us
+        :position relative
+        :padding 1em 2em 1em 0
+        :-moz-border-radius 10px
+        :-webkit-border-radius 10px 
+        :background-color #fff
+        :background-color rgba(255,255,255,.7)
+        :margin 2em auto
+        :width 400px
+        img
+          :position absolute
+          :top -15px
+          :right -5px
+
+  #footer
+    :background-color = !dark_blue
+    :clear both
+    :margin-top 2em
+    :padding-bottom 2em
+    :color = !baby_blue
+    :height 100%
+    a
+      :border none
+      :text-decoration none
+    .container
+      :padding-top 1.5em
+      
+      span.text
+        :font-size 1.5em
+        :padding 10px
+      span.img
+        &#squeejee
+          :margin-top 9px
+        &#floxee
+          :margin-top 0px
+      ul
+        li
+          :list-style none
+
+      
+  #nav
+    ul
+      :float right
+      :margin 1em
+      li
+        :list-style none
+        :display inline
+        :margin 0 5px
+        :text-align center
+        a
+          :font-size 1.2em
+          :padding 5px 10px
+          :background-color = !darker_blue
+          :color #fff
+          :text-decoration none
+          :-moz-border-radius 5px
+          :-webkit-border-radius 5px
+          &:hover
+            :background-color = !dark_blue
+  #features
+    :font-size 150%
+    :margin-top 20px
+    #getstarted
+
+
+  .tweetstream
+  
+  .search-form
+    :clear both
+    :float right
+    a.clear-search
+      :margin-left 3em
+    input[name=q]
+      :margin 3px 5px 0 0
+      :float left
+  
+  a.avatar
+    :padding 3px
+    :background-color #fff
+    
+  ul.tweetstream
+    :list-style none
+    :margin 0
+    :padding 0
+    li
+      :clear both
+      :overflow auto
+      :margin-bottom 1em
+      :padding 5px 5px 5px 60px
+      :position relative
+      :min-height 45px
+      &.alt
+        :background-color = !lighter_blue
+      a.avatar
+        :position absolute
+        :top 5px
+        :left 5px
+        :padding 3px
+        :background-color #fff
+        :border-style solid 
+        :border-color = !darker_blue
+        :border-width 1px
+      a.timeago
+        :text-decoration none
+        :border-bottom-style dotted 
+        :border-bottom-width 1px
+        :margin-left .5em
+
+  .pagination-info
+    :float left
+    :margin 0 1em 1em 0
+    
+  .pagination
+    :margin-bottom 1em
+    
+  .people
+    :clear both
+    .person
+      :float left
+      :margin 0 1em 1em 0
+      :width 350px
+      :padding 1em
+      :background-color = !lighter_blue
+    
+  .twitter-info
+    :margin-bottom 1em
+    h3
+      :font-weight bold
+      :margin-bottom .5em
+    a
+      :border none
+      :color = !dark_blue
+      &.avatar
+        :float left
+        :margin-right 1em
+        :padding 3px
+        :background-color #fff
+        :border-style solid 
+        :border-color = !darker_blue
+        :border-width 1px
+    ul.stats
+      :list-style none
+      li
+        :float left
+        :margin-right 1em
+        :font-size 1.5em
+        :line-height 1em
+        :text-align center
+        a
+          :text-decoration none
+        span
+          :display block
+          :font-size 75%
+  #breakdown
+    h3
+      :font-weight bold
+    small
+      :font-size 75%
+      :font-weight normal
+    dl
+      :font-size 1.3em
+  #stats
+    :clear both
+    :margin-top 1em
+    ul#graph-presets
+      :float right
+      :margin-bottom 1em
+      :font-size 85%
+      li
+        :float left
+        :margin-right 1em
+        :list-style none
+        a
+          :display block
+          :padding 3px
+          :-moz-border-radius 2px
+          :-webkit-border-radius 2px
+          :border none
+        &.selected
+          a
+            :background-color = !dark_blue
+            :color = !lighter_blue
+    dl
+      :font-size 1.3em
+    #graph
+      :clear both
+      :height 250px
+      :width 650px
+      :float right
+      :margin-right 1em
+  ol.ranking
+    :font-size 1.3em
+    
+  ul.graph
+    :background url(/images/floxee/chart-footer.png) bottom left no-repeat
+    :height 300px
+    :margin 0
+    :padding 0
+    :position relative
+    li
+      :background url(/images/floxee/chart-shading.png) bottom right repeat-y
+      :background-color = !leaf_green
+      :border-top none
+      :border-bottom none
+      :bottom 12px
+      :list-style none
+      :margin 0
+      :padding 1em 0 0 0
+      :position absolute
+      :text-align center
+      :width 80px
+      :color #fff
+      :font-size 1.3em
+      span.delta
+        :display block
+        :margin-top 1em
+        :font-size 1.1em
+      span.date
+        :font-size .7em
+        :display block
+        :text-align center
+      .tweeter
+        :border none
+        :position absolute
+        :top -50px
+        :left 5px
+        img
+          :padding 2px
+          :background-color #fff
+          :border solid 1px #ccc
+    li.bottom
+      :height 12px
+      :bottom 5px
+      :background url(/images/cylinder-blue-bottom.png) bottom center no-repeat
+
+  form
+    dd
+      :margin-left 0em
+    ul
+      :margin 0
+      :padding 0
+      li
+        :list-style none
+        :clear both
+    .fluid
+      :float left
+      :clear none
+      :margin-right 1em
+    label
+      :display block
+  .form-buttons
+    :clear both
+    :margin-top 1em
+    
+  .toolbar
+    :clear both
+    :float right
+    ul.actions
+      :list-style none
+      :margin 0
+      :padding 0
+      :overflow auto
+      li
+        :float left
+        :margin-left 1em
+      
+  input.prompt
+    :color #999
+    &:focus
+      :color #000
+      
+  button,
+  a.button
+    :background #efefef url(/images/buttons/bg-button.png) center left repeat-x
+    :border-style solid 
+    :border-width 1px 
+    :border-color #ddd #999 #999 #ddd
+    :-moz-border-radius .3em
+    :-webkit-border-radius .3em
+    :-moz-outline-radius .3em
+    :color #111
+    :text-shadow #efefef 1px 1px 0px
+    :display inline-block
+    :font-family Helvetica Neue, Helvetica, Arial, Sans-serif
+    :font-size 1.1em
+    :font-size-adjust none
+    :font-stretch normal
+    :font-style normal
+    :font-variant normal
+    :font-weight normal
+    :line-height 1.2em
+    :margin 0
+    :overflow visible
+    :padding 10px 17px
+    :text-decoration none
+    :text-transform lowercase
+    :width auto
+    :height auto
+    :cursor pointer
+    &.primary
+      :font-weight bold
+      :color #000
+    &:hover
+      :background-image url(/images/buttons/bg-button-hover.png)
+      //:outline solid 2px #cdf
+    &.small
+      :font-size .9em
+      :line-height 1.4em
+      :padding 5px 10px
+      img
+        :margin-right 3px
+    img
+      :float left
+      :margin-right 5px
+      :vertical-align middle
+  a.button
+    &:focus
+      :outline none
+    &:active
+      //:background-image url(/images/buttons/bg-button-pressed.png)
+      //:border-color #999 #ddd #ddd #999
+  // hack for firefox jacking my buttons
+  button 
+    &::-moz-focus-inner
+      :padding 0
+      :border none
+      
+  select.admin-menu
+    :font-size 1.2em
+    :margin  0
+    :padding 0
+      
+body.admin
+  :background-image none
+  #header
+    h1
+      :height 100px
+      :width 300px
+      :position relative
+      a
+        :height 75px
+        :width 300px
+        :display block
+        :background url(/images/floxee/floxee_admin.png) left center no-repeat
+
+      span
+        :font-size 12px
+        :letter-spacing 0
+        :position absolute
+        :top 50px
+        :right 40px
+        :text-align right
+        :font-weight normal
+  #impact
+    :display none
+
+  
+  form.detail
+    :padding 1em
+    :background-color #fff
+    :border-style solid 
+    :border-color = !darker_blue
+    :border-width 1px
+    :-moz-border-radius .5em
+    :-webkit-border-radius .5em
+    
+  table.floxee-admin
+    :clear both
+    :margin-top 2em
+    :border-style solid 
+    :border-color = !darker_blue
+    :border-width 1px
+    :-moz-border-radius-topright .5em
+    :-webkit-border-top-right-radius .5em
+    :-moz-border-radius-topleft .5em
+    :-webkit-border-top-left-radius .5em
+    th
+      :background-color = !darker_blue
+      :padding 10px
+    tr
+      td
+        :padding 10px
+        :background #fff
+      td.actions
+        :text-align right
+      &.alt
+        td
+          :background-color = !lighter_blue

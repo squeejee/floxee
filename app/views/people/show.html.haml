@@ -1,0 +1,7 @@
+%h1= @person.display_name
+.span-12.append-1
+  = render :partial => 'people/person', :locals => {:avatar_size => '64x64'}
+  = render :partial => 'shared/tweetstream', :locals => {:show_pagination => false, :limit => 5}
+#breakdown.box.span-10.last= render :partial => 'vitals'
+#stats.box= render :partial => 'stats'
+= render :partial => 'graph_scripts'

@@ -1,0 +1,21 @@
+- tweets ||= @tweets
+- avatar_size ||= "36x36"
+- show_pagination ||= false
+- header_text ||= t('tweetstream')
+- header_link_path ||= (@person ? tweetstream_person_path(@person.id) : tweetstream_path)
+- limit ||= 0
+
+- unless header_text.blank?
+  %h3= link_to(header_text, header_link_path) 
+- if show_pagination
+  .pagination-info= page_entries_info(@tweets, :entry_name => 'tweet')
+  = will_paginate(@tweets, :previous_label => t('previous'), :next_label => t('next'))
+%ul.tweetstream
+  - tweets[0..(limit-1)].each do |tweet|
+    %li{:class => cycle('', 'alt')}
+      = link_to(image_tag(tweet.person.profile_image_url.gsub(/_normal./, '_bigger.'), :size => avatar_size), twitter_user_url(tweet.from_user), :class => 'avatar')
+      = link_to tweet.person.display_name, person_path(tweet.person_id)
+      = ": #{twitter_auto_link tweet.text}"
+      %a.timeago{:title => tweet.created_at.iso8601, :href => twitter_status_path(tweet)}= tweet.created_at.zone.to_s
+- if show_pagination
+  = will_paginate(@tweets, :previous_label => t('previous'), :next_label => t('next'))

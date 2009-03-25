@@ -1,0 +1,11 @@
+- unless @person.errors.empty?
+  .errors
+    = @person.errors.full_messages
+
+%h1= t('new_person')
+
+- form_tag(admin_people_path, :class => 'detail') do
+  = render :partial => 'form'
+  .form-buttons
+    %button.primary= t('save_person')
+    %a.button.cancel{:href => admin_people_path} cancel

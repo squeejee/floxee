@@ -1,0 +1,85 @@
+- person ||= @person
+
+- content_for :scripts do 
+  :javascript
+    
+     $(function () {
+       var options = {
+         lines: { show: true, lineWidth: 3 },
+         points: { show: false },
+         xaxis: {
+           mode: "time"
+         },
+         colors: ["#85c23f"],
+         grid: {
+           tickColor: "#93BDDB"
+           
+         }
+       };
+       
+       var data = #{person.stats.totals.reverse.to_json};
+       
+
+       $.plot($("#graph"), [data], options );
+       
+       $('a.1w').click(function() {
+         opts = {
+          lines: {
+            lineWidth: 1
+          },
+          points: {
+            show: true
+          },
+          xaxis: {
+            min: #{1.week.ago.to_i*1000} 
+          },
+          grid: {
+            hoverable: true, 
+            clickable: true,
+          }
+         };
+         plotTimeSelection(opts, $(this))
+         return false;
+       });
+       
+       $('a.1m').click(function() {
+         opts = {
+          lines: {
+            lineWidth: 1
+          },
+          points: {
+            show: true
+          },
+          xaxis: {
+            min: #{1.month.ago.to_i*1000} 
+          },
+          grid: {
+            hoverable: true, 
+            clickable: true,
+          }
+         };
+         plotTimeSelection(opts, $(this));
+         return false;
+       });
+       
+       $('a.90d').click(function() {
+         opts = {xaxis: {min: #{90.days.ago.to_i*1000} } }
+         plotTimeSelection(opts, $(this));
+         return false;
+       });
+       
+       $('a.max').click(function() {
+         opts = {xaxis: {min: null } }
+         plotTimeSelection(opts, $(this));
+         return false;
+       });
+       
+       
+       function plotTimeSelection(opts,link) {
+         var defaults = {};
+         var opts = $.extend(true, defaults, options, opts);
+         $.plot($("#graph"), [data], opts );
+         $('ul#graph-presets li').removeClass('selected');
+         link.parent('li').addClass('selected');
+       }
+     });

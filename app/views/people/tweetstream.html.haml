@@ -1,0 +1,5 @@
+= render :partial => 'shared/tweetstream_search_form'
+%h2= t('persons_tweetstream', :name => @person.display_name)
+= render :partial => 'shared/search_filter'
+.tweetstream
+  = render :partial => 'shared/tweetstream', :locals => {:show_pagination => true, :header_text => ''}

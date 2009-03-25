@@ -1,0 +1,108 @@
+--- 
+en-US:
+  greeting: "Welcome, {{name}}"
+  home: Home
+  home_title: Floxee - A directory for the birds!
+  welcome: Welcome
+  icons_by: Icons by
+  sign_up: Sign up
+  thanks_for_signing_up: "Thanks for signing up!"
+  could_not_create_account_please_contact_admin: "We couldn't set up that account, sorry.  Please try again, or contact an admin (link is above)."
+  login: Login
+  sign_out: Sign out
+  username_or_email: Username or email address
+  remember_me: Remember me
+  please_sign_in: Please sign in
+  logged_in_successfully: "Logged in successfully"
+  you_have_been_logged_out: "You have been logged out."
+  could_not_log_you_in_as: "Couldn't log you in as '{{name}}'"
+  create: Create
+  update: Update
+  save: Save
+  cancel: Cancel
+  or: or
+  confirm_destroy: Confirm destroy
+  destroy: Destroy
+  are_you_sure_you_want_to_destroy_this_item: Are you sure you want to destroy this item?
+  add: Add
+  email: Email
+  first_name: First name
+  last_name: Last name
+  middle_name: Middle name
+  nickname: Nickname
+  password: Password
+  confirm_password: Confirm password
+  name: Name
+  public: Public
+  description: Description
+  url: URL
+  notes: Notes
+  lorem: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  today: Today
+  first_name: First name
+  last_name: Last name
+  twitter_screen_name: Twitter screen name
+  search_by_name: Search by name
+  search_results: Search results
+  tweeters: Tweeters
+  nontweeters: Non-tweeters
+  all_tweeting_people: All tweeting people
+  following: Following
+  followers: Followers
+  updates: Updates
+  person_is_on_twitter: "{{name}} is on Twitter"
+  person_is_not_on_twitter: "{{name}} is not on Twitter"
+  you_can_help_change_that: You can help change that
+  sign_the_petition: Sign the petition!
+  and_we_will_add_your_name_below: And we'll add your name below
+  names_are_pulled_from_search_api: Names are pulled from the Twitter search API. This page is updated every five minutes.
+  sign_petition: Sign petition
+  petition_text: "ON {{app_name}}, {{date}} The unanimous Declaration of the undersigned Tweeple wherein we request that {{name}} join Twitter!"
+  share_on: Share on
+  choose_your_message: Choose your message
+  preview_and_send_from_twitter: Preview and send from Twitter
+  petition_message_1: "Please RT: Help {{app_name}} get {{name}} to join Twitter!"
+  petition_message_2: "Please RT: Sign the petition to tell {{name}} to join Twitter!"
+  tweetstream: Tweetstream
+  persons_tweetstream: "{{name}}'s Tweetstream"
+  previous: "&laquo; Newer"
+  next: "Older &raquo;"
+  people: People
+  follower_stats_by: Follower stats by
+  ten_day_snapshot_by: Ten day snapshot by
+  overall_twitter_rank: Overall Twitter Rank
+  average_growth_per_day: Average growth per day
+  tomorrows_projection: Tomorrow's projection
+  one_month_projection: One month projection
+  maximum: max
+  ninety_days: 90d
+  one_month: 1m
+  one_week: 1w
+  twitter_vitals: Twitter vitals
+  powered_by: Powered by 
+  average_tweets_per_day: Average tweets per day
+  average_tweets_per_day_recently: Average tweets per day recently
+  at_reply_index: @reply percentage
+  political_index: Political index
+  search_by_name: Search by name...
+  go: Go
+  search: Search
+  search_tweets: Search tweets
+  searching_for: "Searching for:"
+  clear: clear
+  most_followed: Most followed
+  most_active: Most active
+  stats: Stats
+  new_followers: New followers
+  most_followers_last_seven_days: Most followers last seven days
+  most_followers_last_thirty_days: Most followers last thirty days
+  screen_name: Screen name
+  admin_menu: Admin menu
+  people_admin: People admin
+  admin: Admin
+  administration: Administration
+  editing_person: Editing person
+  save_person: Save person
+  edit: Edit
+  remove: Remove
+  new_person: New person

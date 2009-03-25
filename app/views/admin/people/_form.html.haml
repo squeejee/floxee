@@ -1,0 +1,39 @@
+
+
+%ul.form-area    
+  %li.title.fluid
+    = label_tag 'person_first_name', 'First name'
+    = text_field_tag 'person[first_name]', @person.first_name, :class => 'title'
+  
+  %li.title.fluid
+    =label_tag 'person_nickname', 'Nickname'
+    = text_field_tag 'person[nickname]', @person.nickname, :class => 'title'
+  
+  %li.title.fluid
+    =label_tag 'person_middle_name', 'Middle name'
+    = text_field_tag 'person[middle_name]', @person.middle_name, :class => 'title'
+  
+  %li.title
+    =label_tag 'person_last_name', 'Last name'
+    = text_field_tag 'person[last_name]', @person.last_name, :class => 'title'
+  
+  %li.title
+    =label_tag 'person_screen_name', 'Screen name'
+    = text_field_tag 'person[screen_name]', @person.screen_name, :class => 'title'
+  
+  %li.title.fluid
+    =label_tag 'person_email', 'Email'
+    = text_field_tag 'person[email]', @person.email, :class => 'title'
+  
+  %li.title.fluid
+    =label_tag 'person_website', 'Website'
+    = text_field_tag 'person[website]', @person.website, :class => 'title'
+  
+  %li.title.fluid
+    =label_tag 'person_phone', 'Phone'
+    = text_field_tag 'person[phone]', @person.phone, :class => 'title'
+  
+  %li.title.fluid
+    =label_tag 'person_fax', 'Fax'
+    = text_field_tag 'person[fax]', @person.fax, :class => 'title'
+%br.clear

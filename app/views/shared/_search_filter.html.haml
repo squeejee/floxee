@@ -1,0 +1,5 @@
+- if params[:q]
+  %h3.search-filter
+    = t('searching_for')
+    %em= params[:q]
+    = link_to t('clear'), {:q => nil}, :class => 'clear-search'

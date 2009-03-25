@@ -1,0 +1,25 @@
+- person ||= @person
+%ul#graph-presets
+  %li.selected
+    %a.max{:href => "#"}= t('maximum')
+  %li
+    %a.90d{:href => "#"}= t('ninety_days')
+  %li
+    %a.1m{:href => "#"}= t('one_month')
+  %li
+    %a.1w{:href => "#"}= t('one_week')
+%h3
+  = t('follower_stats_by')
+  = link_to('TwitterCounter', "http://twittercounter.com/#{person.screen_name}")
+#graph
+%dl.span-8
+  %dt= t('followers')
+  %dd= person.followers_count
+  %dt= t('overall_twitter_rank')
+  %dd= person.stats.rank
+  %dt= t('average_growth_per_day')
+  %dd= person.stats.average_growth_2w
+  %dt= t('tomorrows_projection')
+  %dd= person.stats.tomorrow
+  %dt= t('one_month_projection')
+  %dd= person.stats.next_month

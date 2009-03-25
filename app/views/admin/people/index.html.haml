@@ -1,0 +1,30 @@
+= render :partial => "toolbar"
+= render :partial => 'people/search_form'
+%h1= t('people')
+= render :partial => 'shared/search_filter'
+#people
+  - unless @people.empty?
+    .pagination-info= page_entries_info @people    
+    = will_paginate @people
+    %br.clear
+    %table.people.floxee-admin.index
+      %tr
+        %th= t('first_name')
+        %th= t('last_name')
+        %th= t('screen_name')
+        %th
+
+      - for person in @people
+        %tr{:class => cycle('', 'alt')}
+          %td.name= person.first_name
+          %td.name= person.last_name
+          %td.name= person.screen_name
+          %td.actions
+            %a.button.small.edit{:href => edit_admin_person_path(person.id)}
+              = icon('pencil_small')
+              = t('edit')
+            %a.button.small.remove{:href => confirm_destroy_admin_person_path(person.id)}
+              = icon('cross_small')
+              = t('remove')
+    = will_paginate @people
+= #render :partial => "toolbar"
