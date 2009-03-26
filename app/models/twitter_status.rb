@@ -1,5 +1,5 @@
 class TwitterStatus < CouchRest::ExtendedDocument
-  use_database CouchRest.database!(COUCH_DATABASE)
+  use_database CouchRest.database!(Floxee.server)
   
   property  :id
   property  :text

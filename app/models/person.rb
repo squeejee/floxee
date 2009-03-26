@@ -1,5 +1,5 @@
 class Person < CouchRest::ExtendedDocument
-  use_database CouchRest.database!(COUCH_DATABASE)
+  use_database CouchRest.database!(Floxee.server)
   
   include CouchRest::Validation
   
