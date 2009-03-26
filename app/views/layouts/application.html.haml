@@ -2,12 +2,9 @@
 !!!
 %html{ "xml:lang" => "en", :lang => "en", :xmlns => "http://www.w3.org/1999/xhtml" }
   %head 
-    = stylesheet_link_tag 'compiled/floxee/screen.css', :media => 'screen, projection'
-    = stylesheet_link_tag 'compiled/floxee/print.css', :media => 'print'
     = stylesheet_link_tag 'compiled/screen.css', :media => 'screen, projection'
     = stylesheet_link_tag 'compiled/print.css', :media => 'print'
     /[if IE]
-      = stylesheet_link_tag 'compiled/floxee/ie.css', :media => 'screen, projection'
       = stylesheet_link_tag 'compiled/ie.css', :media => 'screen, projection'
       = javascript_include_tag 'excanvas.js'
     %script{ :type => "text/javascript", :src => "http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js" }
