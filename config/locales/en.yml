@@ -1,5 +1,5 @@
 --- 
-en-US:
+en:
   greeting: "Welcome, {{name}}"
   home: Home
   home_title: Floxee - A directory for the birds!
