@@ -1,4 +1,4 @@
 .search-form
-  %form{:method => 'GET'}
+  %form{:action => url_for(:page => 1), :method => 'GET'}
     %input.title.prompt{:name => 'q', :title => t('search_tweets'), :value => params[:q]}
     %button= t("search")
