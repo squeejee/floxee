@@ -2,7 +2,6 @@
 namespace :floxee do
   desc "Sync extra files from floxee plugin."
   task :sync do
-    system "rsync -ruv vendor/plugins/floxee/db/migrate db"
     system "rsync -ruv vendor/plugins/floxee/public ."
   end
   
