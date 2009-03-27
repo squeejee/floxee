@@ -150,7 +150,7 @@ class Person < CouchRest::ExtendedDocument
     @people.paginate(:page => options[:page], :per_page => options[:per_page])
   end
   
-  def self.search(options)
+  def self.search(options={})
     @people = Rails.cache.fetch('people', :expires_in => 60*60*6) {Person.all}
     @people = @people.select{|p| p.display_name.downcase.include?(options[:q]) } unless options[:q].blank?
     @people
