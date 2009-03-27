@@ -71,21 +71,29 @@ class Person < CouchRest::ExtendedDocument
 
   def fetch_info
     unless self.screen_name.nil?
-      user = JSON.parse(Net::HTTP.get(URI.parse("http://twitter.com/users/#{self.screen_name}.json")))
-      self.merge!(user) if user
+      begin
+        user = JSON.parse(Net::HTTP.get(URI.parse("http://twitter.com/users/#{self.screen_name}.json")))
+        self.merge!(user) if user
+      rescue
+        puts "Problem getting Twitter info for #{self.display_name}"
+      end
     end
   end
   
   def fetch_stats
     unless self.screen_name.nil?
+      begin
       stats = TwitterUserStats.by_screen_name(:key => self.screen_name).first
-      if stats
-        stats.destroy
-      else
-        stats = TwitterUserStats.new
-        stats.screen_name = self.screen_name
+        if stats
+          stats.destroy
+        else
+          stats = TwitterUserStats.new
+          stats.screen_name = self.screen_name
+        end
+        stats.save
+      rescue
+        puts "Problem getting TwitterCounter stats for #{self.display_name}"
       end
-      stats.save
     end
   end
   
@@ -95,29 +103,33 @@ class Person < CouchRest::ExtendedDocument
   
   def fetch_latest_statuses
     unless self.screen_name.nil?
-      if self.statuses.blank?
-        # self.statuses = []
-        # multiple calls to get all statuses
-        page_count = (self.statuses_count/100) + 1
-        (1..(page_count)).each do |page|
-          search = Twitter::Search.new.from(self.screen_name).page(page).per_page(100).fetch()
-          #self.statuses.concat search['results']
+      begin
+        if self.statuses.blank?
+          # self.statuses = []
+          # multiple calls to get all statuses
+          page_count = (self.statuses_count/100) + 1
+          (1..(page_count)).each do |page|
+            search = Twitter::Search.new.from(self.screen_name).page(page).per_page(100).fetch()
+            #self.statuses.concat search['results']
+            search['results'].each do |tweet|
+              ts = TwitterStatus.new(tweet)
+              ts.person_id = self.id
+              ts.save
+            end
+          end
+      
+        else
+          last_id = self.statuses.map{|status| status.id}.max
+          search = Twitter::Search.new.from(self.screen_name).since(last_id).fetch()
+          #self.statuses.concat(search['results']).uniq!      
           search['results'].each do |tweet|
             ts = TwitterStatus.new(tweet)
             ts.person_id = self.id
             ts.save
           end
         end
-      
-      else
-        last_id = self.statuses.map{|status| status.id}.max
-        search = Twitter::Search.new.from(self.screen_name).since(last_id).fetch()
-        #self.statuses.concat(search['results']).uniq!      
-        search['results'].each do |tweet|
-          ts = TwitterStatus.new(tweet)
-          ts.person_id = self.id
-          ts.save
-        end
+      rescue
+        puts "Problem getting tweets for #{self.display_name}"
       end
     end
   end
@@ -133,14 +145,14 @@ class Person < CouchRest::ExtendedDocument
     options[:page] = options[:page].to_i
     
     
-    @people = Person.search(options[:q]).sort_by{|p| p[options[:sort]]}
+    @people = Person.search(options).sort_by{|p| p[options[:sort]]}
     @people.reverse! if options[:reverse]
     @people.paginate(:page => options[:page], :per_page => options[:per_page])
   end
   
-  def self.search(q)
+  def self.search(options)
     @people = Rails.cache.fetch('people', :expires_in => 60*60*6) {Person.all}
-    @people = @people.select{|p| p.display_name.downcase.include?(q) } unless q.blank?
+    @people = @people.select{|p| p.display_name.downcase.include?(options[:q]) } unless options[:q].blank?
     @people
   end
   

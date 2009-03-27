@@ -27,7 +27,7 @@ class TwitterStatus < CouchRest::ExtendedDocument
     options[:per_page] = options[:per_page].to_i
     options[:page] = options[:page].to_i
     
-    @tweets = TwitterStatus.search(options[:q])
+    @tweets = TwitterStatus.search(options)
     
     unless options[:screen_names].blank?
       @tweets = @tweets.select{|t| options[:screen_names].split(',').include?(t.from_user) }
@@ -35,9 +35,9 @@ class TwitterStatus < CouchRest::ExtendedDocument
     @tweets.paginate(:page => options[:page], :per_page => options[:per_page])
   end
   
-  def self.search(q)
+  def self.search(options)
     @tweets = Rails.cache.fetch('tweets', :expires_in => 60*60*6) {TwitterStatus.by_id}
-    @tweets = @tweets.select{|t| t.text.downcase.include?(q) } unless q.blank?
+    @tweets = @tweets.select{|t| t.text.downcase.include?(options[:q]) } unless options[:q].blank?
     @tweets
   end
 
