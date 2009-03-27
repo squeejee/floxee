@@ -8,7 +8,7 @@
   %dt= t('average_tweets_per_day')
   %dd= number_with_precision(person.stats.average_tweets_per_day, 2)
   %dt= t('average_tweets_per_day_recently')
-  %dd= person.stats.average_tweets_per_day_recently
+  %dd= number_with_precisionperson.stats.average_tweets_per_day_recently, 2)
   %dt
     = t('at_reply_index')
     %img.tip{ :src => "/images/question.png", :title => "The @ reply index is the percentage of recent tweets that are @ replies", :alt => "what is the @ reply index"}
