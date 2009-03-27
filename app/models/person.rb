@@ -135,7 +135,6 @@ class Person < CouchRest::ExtendedDocument
   end
   
   def self.paginate(options={})
-    options[:reverse] = options[:reverse].to_s == "true"
     options[:sort] ||= 'last_name'
     
     options[:per_page] ||= 10
@@ -147,9 +146,9 @@ class Person < CouchRest::ExtendedDocument
     if %w{statuses_count followers_count}.include?(options[:sort])
       @people = Person.search(options).sort_by{|p| p[options[:sort]].to_i}
     else
-      @people = Person.search(options).sort_by{|p| p[options[:sort]]}
+      @people = Person.search(options).sort_by{|p| p[options[:sort]].to_s}
     end
-    @people.reverse! if options[:reverse]
+    @people.reverse! unless (options[:reverse].to_s == "true" or options[:reverse].blank?)
     @people.paginate(:page => options[:page], :per_page => options[:per_page])
   end
   
