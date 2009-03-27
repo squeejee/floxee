@@ -1,4 +1,4 @@
-- if params[:q]
+- unless params[:q].blank?
   %h3.search-filter
     = t('searching_for')
     %em= params[:q]
