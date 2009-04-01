@@ -4,7 +4,8 @@ class PeopleController < ApplicationController
   def index
     @page_title = t('people')
     @people = Person.paginate(params)
-    
+    @reverse = params[:reverse]
+    @sort_attribute = params[:sort]
   end
   
 
