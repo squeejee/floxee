@@ -24,6 +24,13 @@ module FloxeeHelper
     "http://twitter.com/#{status.from_user}/statuses/#{status.id}"
   end
   
+  def twitter_profile_image(twitter_user, options={})
+    return if twitter_user.profile_image_url.blank?
+    opts = {:class => 'avatar', :size => '36x36'}
+    opts.merge!(options)
+    image_tag(twitter_user.profile_image_url, opts)
+  end
+  
   def user_profile_image_path(size='mini')
     return unless logged_in?
     path = current_user.profile_image_url
