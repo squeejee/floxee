@@ -11,8 +11,8 @@ class MainController < ApplicationController
   end
   
   def stats
-    @most_followed = Person.all.sort_by{|p| p.followers_count}.reverse
-    @most_active = Person.all.sort_by{|p| p.statuses_count}.reverse
+    @most_followed = Person.all.sort_by{|p| p.followers_count.to_i}.reverse[0..4]
+    @most_active = Person.all.sort_by{|p| p.statuses_count.to_i}.reverse[0..4]
     @most_new_seven_days = Person.most_followers_last_seven_days
     @most_new_thirty_days = Person.most_followers_last_thirty_days
   end
