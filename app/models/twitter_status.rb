@@ -36,7 +36,7 @@ class TwitterStatus < CouchRest::ExtendedDocument
   end
   
   def self.search(options={})
-    @tweets = Rails.cache.fetch('tweets', :expires_in => 60*60*6) {TwitterStatus.by_id}
+    @tweets = Rails.cache.fetch('tweets', :expires_in => 60*2) {TwitterStatus.by_id}
     @tweets = @tweets.select{|t| t.text.downcase.include?(options[:q]) } unless options[:q].blank?
     @tweets
   end
