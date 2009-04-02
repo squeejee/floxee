@@ -19,7 +19,8 @@ body
   :padding 0
   :background = !dark_blue
   :color #111
-  
+  .container
+    :overflow none
   a
     &:link,
     &:visited,
@@ -79,6 +80,7 @@ body
               :outline none
           &.logo
             :float left
+            :margin-left 0
             a,a:hover
               :background-color transparent
           &.user-info
@@ -151,7 +153,12 @@ body
       :text-decoration none
     .container
       :padding-top 1.5em
-      
+    .footer-left
+      :padding 10px
+      :background-color = !lighter_blue
+      :color = !dark_blue
+      :-webkit-border-radius 5px
+      :-moz-border-radius 5px
       span.text
         :font-size 1.5em
         :padding 10px
@@ -160,14 +167,13 @@ body
           :margin-top 9px
         &#floxee
           :margin-top 0px
-      ul
-        li
-          :list-style none
+    ul
+      li
+        :list-style none
 
       
   #nav
     ul
-      :float right
       :margin 1em
       li
         :list-style none
