@@ -72,7 +72,7 @@ class Person < CouchRest::ExtendedDocument
   def fetch_info
     unless self.screen_name.nil?
       begin
-        user = JSON.parse(Net::HTTP.get(URI.parse("http://twitter.com/users/#{self.screen_name}.json")))
+        user = JSON.parse(Net::HTTP.get(URI.parse("http://twitter.com/users/show/#{self.screen_name}.json")))
         self.merge!(user) if user
       rescue
         puts "Problem getting Twitter info for #{self.display_name}"
