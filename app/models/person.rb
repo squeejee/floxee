@@ -66,7 +66,7 @@ class Person < CouchRest::ExtendedDocument
   end
   
   def stats
-     Rails.cache.fetch("people-#{self.id}-stats", :expires_in => 60*10) {TwitterUserStats.by_screen_name(:key => self.screen_name).first}
+     TwitterUserStats.by_screen_name(:key => self.screen_name).first
   end
 
   def fetch_info
