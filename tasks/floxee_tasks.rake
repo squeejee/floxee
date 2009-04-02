@@ -28,7 +28,7 @@ namespace :floxee do
   desc "Fetch stats from TwitterCounter and FollowCost"
   task :fetch_stats => :environment do
     Person.all.each do |p|
-      p.stats.fetch
+      p.stats.fetch if p.stats
     end
   end
   
