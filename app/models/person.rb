@@ -116,8 +116,7 @@ class Person < CouchRest::ExtendedDocument
               ts.person_id = self.id
               ts.save
             end
-          end
-      
+          end      
         else
           last_id = self.statuses.map{|status| status.id}.max
           search = Twitter::Search.new.from(self.screen_name).since(last_id).fetch()
@@ -128,6 +127,8 @@ class Person < CouchRest::ExtendedDocument
             ts.save
           end
         end
+        # Refresh the TwitterStatus cache if new results are returned
+        TwitterStatus.cached_by_id(true) if search['results'].size > 0
       rescue
         puts "Problem getting tweets for #{self.display_name}"
       end
