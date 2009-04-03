@@ -14,6 +14,13 @@
 !link_blue = #4691C9
 !leaf_green = #85c23f
 
+=frame-3
+  :padding 3px
+  :border-style solid 
+  :border-color = !baby_blue
+  :border-width 1px
+  :background-color #fff
+
 body
   :margin 0
   :padding 0
@@ -48,6 +55,9 @@ body
     :display inline
   .clear
     :clear both
+  .snug
+    :margin-bottom 0
+    
   #topwrap
     :background = !baby_blue
   #wrapper
@@ -212,10 +222,6 @@ body
     input[name=q]
       :margin 3px 5px 0 0
       :float left
-  
-  a.avatar
-    :padding 3px
-    :background-color #fff
     
   ul.tweetstream
     :list-style none
@@ -254,12 +260,44 @@ body
   .people
     :clear both
     .person
-      :float left
-      :margin 0 1em 1em 0
-      :width 350px
-      :padding 1em
-      :background-color = !lighter_blue
-    
+      :clear both
+      :padding 1em 1em 1em 64px
+      :background = !lighter_blue url(/images/top-shine.png) top left repeat-x
+      :height auto
+      :overflow auto
+      :position relative
+      :margin-bottom 5px
+      a
+        :border-bottom none
+      p.bio
+        :margin 5px 0 0 0
+      a.avatar
+        +frame-3
+        :position absolute
+        :top 10px
+        :left 10px    
+      .more-info
+        :font-size 1.3em
+        :text-align center
+        :font-weight bold
+        :text-transform lowercase
+        :float right
+        :height 50px
+        :margin-left 1em
+        //:border-style solid 
+        //:border-color = !darker_blue
+        //:border-width 0 0 0 1px
+        :background transparent url(/images/groove.gif) 0px 0px repeat-y
+        :padding-left 10px
+        a
+          :color = !dark_blue
+          &.button
+            :margin-top 10px
+        small
+          :display block
+          :font-weight normal
+        
+        
   .twitter-info
     :margin-bottom 1em
     h3
@@ -445,8 +483,26 @@ body
       :font-size .9em
       :line-height 1.4em
       :padding 5px 10px
+      :-moz-border-radius 1px
+      :-webkit-border-radius 1px
       img
         :margin-right 3px
+    &.dark
+      :background-image url(/images/buttons/top-shine.png)
+      :background-color = !dark_blue
+      :color #fff !important
+      :border-style solid 
+      :border-color = !darker_blue
+      :border-width 2px
+      :-moz-border-radius 2px
+      :-webkit-border-radius 2px
+      &:hover
+        :border-color = !leaf_green
+    &.follow-all
+      :font-size 1.3em
+      :text-align center
+      :display block
+        
     img
       :float left
       :margin-right 5px
@@ -467,6 +523,18 @@ body
     :font-size 1.2em
     :margin  0
     :padding 0
+  
+  .sidebar
+    :margin-top 40px
+    .buttons
+      :text-align center
+      :margin-bottom 1em
+    .options
+    .form-buttons
+      :text-align center
+      :margin-top 2em
+      
+      
       
 body.admin
   :background-image none

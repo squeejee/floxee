@@ -1,12 +1,36 @@
 = render :partial => 'search_form'
 %h1= t('people')
-= render :partial => 'shared/search_filter'
-- unless @people.empty?
+.people.span-18
   .pagination-info= page_entries_info(@people)
   = will_paginate(@people)
-  .people
+  = render :partial => 'shared/search_filter'
+  - unless @people.empty?
     - @people.each do |person|
-      .person{:id => person.id}
-        %h3= link_to (person.display_name, person_path(person.id))
-        = render :partial => 'people/person', :locals => {:person => person, :avatar_size => '64x64'}
-    
+      = render :partial => 'people/person', :locals => {:person => person, :avatar_size => '64x64'}
+  %br.clear
+.sidebar.span-5.prepend-1.last
+  .buttons
+    %a.button.follow-all{:href => follow_all_people_path }= t('follow_all')
+  %form.options.box{:method => 'GET'}
+    %h4= t('options')
+    %label
+      = "#{t('sort_by')}:"
+      %select{:name => 'sort'}
+        %option{:value => 'last_name'}= t('last_name')
+        %option{:value => 'followers_count'}= t('followers')
+    %label
+      = "#{t('direction')}:"
+      %select{:name => 'reverse'}
+        %option{:value => ''}= t('asc')
+        %option{:value => 'true'}= t('desc')
+    %label
+      = "#{t('per_page')}:"
+      %select{:name => 'per_page'}
+        %option{:value => '10'} 10
+        %option{:value => '25'} 25
+        %option{:value => '50'} 50
+        %option{:value => '1000'}= t('all')
+    .form-buttons
+      %button.small= t('update')
+      = t('or')
+      = link_to t('cancel'), people_path
