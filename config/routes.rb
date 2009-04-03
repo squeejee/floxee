@@ -2,6 +2,7 @@ ActionController::Routing::Routes.draw do |map|
   
   map.namespace :admin do |admin|
     admin.resources :people, :member => {:confirm_destroy => :get}
+    admin.resources :users
   end
   
   map.paginated_people 'people/page/:page', :controller => 'people', :action => 'index', :page => 1

@@ -106,6 +106,10 @@ en:
   edit: Edit
   remove: Remove
   new_person: New person
+  user_admin: User admin
+  new_user: New user
+  edit_user: Edit user
+  users: Users
   options: Options
   follow_all: Follow everyone
   sort_by: Sort by

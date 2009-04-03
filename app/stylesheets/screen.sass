@@ -27,7 +27,7 @@ body
   :background = !dark_blue
   :color #111
   .container
-    :overflow none
+    :overflow none !important
   a
     &:link,
     &:visited,
@@ -60,6 +60,12 @@ body
     
   #topwrap
     :background = !baby_blue
+  #wrapper
+    :padding-bottom 20px
+    .container, #content
+      :overflow hidden !important
+    #content
+      :min-height 400px
   #header
     :position relative
     :clear both
@@ -223,7 +229,6 @@ body
     :padding 0
     li
       :clear both
-      :overflow auto
       :margin-bottom 1em
       :padding 5px 5px 5px 60px
       :position relative
@@ -430,7 +435,7 @@ body
       :color #000
       
   button,
-  a.button
+  a.button,input.button
     :background #efefef url(/images/buttons/bg-button.png) center left repeat-x
     :border-style solid 
     :border-width 1px 
