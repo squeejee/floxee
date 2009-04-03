@@ -38,8 +38,13 @@ namespace :floxee do
       p.fetch_latest_statuses
     end
   end
-  
-  
+    
+  desc "Fetch latest twitter user profile info from Twitter api"
+  task :fetch_info => :environment do
+    Person.all.each do |p|
+      p.fetch_info
+    end
+  end
   
   
 end
