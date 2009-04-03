@@ -161,12 +161,12 @@ class Person < CouchRest::ExtendedDocument
   
   def self.most_followers_last_seven_days
     people_with_stats =  Person.all.select{|p| !p.stats.nil?}
-    people_with_stats.sort_by{|p| p.stats.followers_change_last_seven_days.to_i}.reverse[0..9].map{|p| [p, p.stats.followers_change_last_seven_days]}.reverse
+    people_with_stats.sort_by{|p| p.stats.followers_change_last_seven_days.to_i}.reverse[0..9].map{|p| [p, p.stats.followers_change_last_seven_days]}
   end
   
   def self.most_followers_last_thirty_days
     people_with_stats =  Person.all.select{|p| !p.stats.nil?}
-    people_with_stats.sort_by{|p| p.stats.followers_change_last_thirty_days.to_i}.reverse[0..9].map{|p| [p, p.stats.followers_change_last_thirty_days]}.reverse
+    people_with_stats.sort_by{|p| p.stats.followers_change_last_thirty_days.to_i}.reverse[0..9].map{|p| [p, p.stats.followers_change_last_thirty_days]}
   end
 
   def generate_unique_id
