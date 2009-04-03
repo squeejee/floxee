@@ -106,3 +106,12 @@ en:
   edit: Edit
   remove: Remove
   new_person: New person
+  options: Options
+  follow_all: Follow everyone
+  sort_by: Sort by
+  direction: Direction
+  asc: ASC
+  desc: DESC
+  per_page: Per page
+  you_are_now_following: "You are now following {{name}}"
+  you_are_no_longer_following: "You are no longer following {{name}}"

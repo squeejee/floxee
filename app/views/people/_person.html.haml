@@ -1,23 +1,17 @@
 - person ||= @person
-- avatar_size ||= "64x64"
-- if person.tweets?
-  .twitter-info
-    %a.avatar{:href => twitter_user_url(person.screen_name)}
-      - unless person.profile_image_url.blank?
-        = image_tag(person.profile_image_url.gsub(/_normal./, '_bigger.'), :class => 'profile-image', :size => avatar_size)
-    %h3
-      %a.twitter-username{:href => twitter_user_url(person.screen_name)}= person.screen_name
-    %ul.stats
-      %li.following
-        %a{:href => twitter_user_friends_url(person.screen_name)}
-          = person.friends_count
-          %span following
-      %li.followers
-        %a{:href => twitter_user_followers_url(person.screen_name)}
-          = person.followers_count
-          %span followers
-      %li.updates
-        %a{:href => twitter_user_url(person.screen_name)}
-          = person.statuses_count
-          %span updates
-    %br.clear
+- avatar_size ||= "48x48"
+.person.vcard{:id => person.id}
+  .more-info
+    %a.button.small.dark{:href => follow_person_path(person.id)} follow
+  .more-info.stats
+    %a{:href => person_path(person.id)}
+      = image_tag("/images/chart-icon.png") 
+      %small= t('stats')
+  .more-info
+    %a{:href => person_path(person.id)}
+      = person.followers_count.to_i
+      %small= t('followers')
+  %a.avatar{:href => person_path(person.id)}
+    = twitter_profile_image(person)
+  %h3.snug= link_to person.display_name, person_path(person.id), :class => 'fn url'
+  %p.bio= person.description

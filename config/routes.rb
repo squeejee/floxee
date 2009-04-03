@@ -5,7 +5,7 @@ ActionController::Routing::Routes.draw do |map|
   end
   
   map.paginated_people 'people/page/:page', :controller => 'people', :action => 'index', :page => 1
-  map.resources :people, :member => {:tweetstream => :get}
+  map.resources :people, :member => {:tweetstream => :get, :follow => :get}, :collection => {:follow_all => :get}
   
   map.with_options :controller => 'main' do |m|
     m.tweetstream 'tweetstream/:page', :action => 'tweetstream', :page => 1
