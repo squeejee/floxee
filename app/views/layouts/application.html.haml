@@ -10,6 +10,7 @@
     %script{ :type => "text/javascript", :src => "http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js" }
     = javascript_include_tag 'jquery.timeago.js', 'jquery.flot.js',  'application.js'
     = yield :scripts
+    %link{ :rel => "shortcut icon" :href => "/images/favicon.png"}
     %meta{ :content => "text/html;charset=UTF-8", "http-equiv" => "content-type" }
     %title
       = "#{@page_title}"
