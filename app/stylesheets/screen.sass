@@ -14,12 +14,20 @@
 !link_blue = #4691C9
 !leaf_green = #85c23f
 
+=frame-3
+  :padding 3px
+  :border-style solid 
+  :border-color = !baby_blue
+  :border-width 1px
+  :background-color #fff
+
 body
   :margin 0
   :padding 0
   :background = !dark_blue
   :color #111
-  
+  .container
+    :overflow none !important
   a
     &:link,
     &:visited,
@@ -47,8 +55,17 @@ body
     :display inline
   .clear
     :clear both
+  .snug
+    :margin-bottom 0
+    
   #topwrap
     :background = !baby_blue
+  #wrapper
+    :padding-bottom 20px
+    .container, #content
+      :overflow hidden !important
+    #content
+      :min-height 400px
   #header
     :position relative
     :clear both
@@ -79,6 +96,7 @@ body
               :outline none
           &.logo
             :float left
+            :margin-left 0
             a,a:hover
               :background-color transparent
           &.user-info
@@ -151,7 +169,12 @@ body
       :text-decoration none
     .container
       :padding-top 1.5em
-      
+    .footer-left
+      :padding 10px
+      :background-color = !lighter_blue
+      :color = !dark_blue
+      :-webkit-border-radius 5px
+      :-moz-border-radius 5px
       span.text
         :font-size 1.5em
         :padding 10px
@@ -160,14 +183,13 @@ body
           :margin-top 9px
         &#floxee
           :margin-top 0px
-      ul
-        li
-          :list-style none
+    ul
+      li
+        :list-style none
 
       
   #nav
     ul
-      :float right
       :margin 1em
       li
         :list-style none
@@ -200,10 +222,6 @@ body
     input[name=q]
       :margin 3px 5px 0 0
       :float left
-  
-  a.avatar
-    :padding 3px
-    :background-color #fff
     
   ul.tweetstream
     :list-style none
@@ -211,7 +229,6 @@ body
     :padding 0
     li
       :clear both
-      :overflow auto
       :margin-bottom 1em
       :padding 5px 5px 5px 60px
       :position relative
@@ -243,12 +260,44 @@ body
   .people
     :clear both
     .person
-      :float left
-      :margin 0 1em 1em 0
-      :width 350px
-      :padding 1em
-      :background-color = !lighter_blue
-    
+      :clear both
+      :padding 1em 1em 1em 64px
+      :background = !lighter_blue url(/images/top-shine.png) top left repeat-x
+      :height auto
+      :overflow auto
+      :position relative
+      :margin-bottom 5px
+      a
+        :border-bottom none
+      p.bio
+        :margin 5px 0 0 0
+      a.avatar
+        +frame-3
+        :position absolute
+        :top 10px
+        :left 10px    
+      .more-info
+        :font-size 1.3em
+        :text-align center
+        :font-weight bold
+        :text-transform lowercase
+        :float right
+        :height 50px
+        :margin-left 1em
+        //:border-style solid 
+        //:border-color = !darker_blue
+        //:border-width 0 0 0 1px
+        :background transparent url(/images/groove.gif) 0px 0px repeat-y
+        :padding-left 10px
+        a
+          :color = !dark_blue
+          &.button
+            :margin-top 10px
+        small
+          :display block
+          :font-weight normal
+        
+        
   .twitter-info
     :margin-bottom 1em
     h3
@@ -318,47 +367,36 @@ body
   ol.ranking
     :font-size 1.3em
     
-  ul.graph
-    :background url(/images/floxee/chart-footer.png) bottom left no-repeat
-    :height 300px
-    :margin 0
-    :padding 0
-    :position relative
-    li
-      :background url(/images/floxee/chart-shading.png) bottom right repeat-y
-      :background-color = !leaf_green
-      :border-top none
-      :border-bottom none
-      :bottom 12px
-      :list-style none
-      :margin 0
-      :padding 1em 0 0 0
-      :position absolute
-      :text-align center
-      :width 80px
-      :color #fff
-      :font-size 1.3em
-      span.delta
-        :display block
-        :margin-top 1em
-        :font-size 1.1em
-      span.date
-        :font-size .7em
-        :display block
-        :text-align center
-      .tweeter
+  dl.graph
+    dt
+      :margin-top 1em
+      :text-align left
+      a
         :border none
+        :color #000
+      img.avatar
+        :padding 2px
+        :background-color #fff
+        :margin-left 5px
+        :vertical-align middle
+    dd
+      :background-color = !leaf_green
+      :background-image url(/images/top-shine.png)
+      :background-repeat repeat-x
+      :background-position left -30px
+      :padding 5px
+      :margin -1em 0 0 50px
+      :line-height 20px
+      :height 20px
+      :position relative
+      :text-align right
+      a
+        :border 0
+        :color #000
+        :text-align left
         :position absolute
-        :top -50px
-        :left 5px
-        img
-          :padding 2px
-          :background-color #fff
-          :border solid 1px #ccc
-    li.bottom
-      :height 12px
-      :bottom 5px
-      :background url(/images/cylinder-blue-bottom.png) bottom center no-repeat
+        :margin-left 15px
+
 
   form
     dd
@@ -397,7 +435,7 @@ body
       :color #000
       
   button,
-  a.button
+  a.button,input.button
     :background #efefef url(/images/buttons/bg-button.png) center left repeat-x
     :border-style solid 
     :border-width 1px 
@@ -434,8 +472,26 @@ body
       :font-size .9em
       :line-height 1.4em
       :padding 5px 10px
+      :-moz-border-radius 1px
+      :-webkit-border-radius 1px
       img
         :margin-right 3px
+    &.dark
+      :background-image url(/images/buttons/top-shine.png)
+      :background-color = !dark_blue
+      :color #fff !important
+      :border-style solid 
+      :border-color = !darker_blue
+      :border-width 2px
+      :-moz-border-radius 2px
+      :-webkit-border-radius 2px
+      &:hover
+        :border-color = !leaf_green
+    &.follow-all
+      :font-size 1.3em
+      :text-align center
+      :display block
+        
     img
       :float left
       :margin-right 5px
@@ -456,6 +512,18 @@ body
     :font-size 1.2em
     :margin  0
     :padding 0
+  
+  .sidebar
+    :margin-top 40px
+    .buttons
+      :text-align center
+      :margin-bottom 1em
+    .options
+    .form-buttons
+      :text-align center
+      :margin-top 2em
+      
+      
       
 body.admin
   :background-image none

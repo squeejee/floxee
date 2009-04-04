@@ -66,13 +66,13 @@ class Person < CouchRest::ExtendedDocument
   end
   
   def stats
-     Rails.cache.fetch("people-#{self.id}-stats", :expires_in => 60*10) {TwitterUserStats.by_screen_name(:key => self.screen_name).first}
+     TwitterUserStats.by_screen_name(:key => self.screen_name).first
   end
 
   def fetch_info
     unless self.screen_name.nil?
       begin
-        user = JSON.parse(Net::HTTP.get(URI.parse("http://twitter.com/users/#{self.screen_name}.json")))
+        user = JSON.parse(Net::HTTP.get(URI.parse("http://twitter.com/users/show/#{self.screen_name}.json")))
         self.merge!(user) if user
       rescue
         puts "Problem getting Twitter info for #{self.display_name}"
@@ -116,8 +116,7 @@ class Person < CouchRest::ExtendedDocument
               ts.person_id = self.id
               ts.save
             end
-          end
-      
+          end      
         else
           last_id = self.statuses.map{|status| status.id}.max
           search = Twitter::Search.new.from(self.screen_name).since(last_id).fetch()
@@ -128,6 +127,8 @@ class Person < CouchRest::ExtendedDocument
             ts.save
           end
         end
+        # Refresh the TwitterStatus cache if new results are returned
+        TwitterStatus.cached_by_id(true) if search['results'].size > 0
       rescue
         puts "Problem getting tweets for #{self.display_name}"
       end
@@ -160,12 +161,12 @@ class Person < CouchRest::ExtendedDocument
   
   def self.most_followers_last_seven_days
     people_with_stats =  Person.all.select{|p| !p.stats.nil?}
-    people_with_stats.sort_by{|p| p.stats.followers_change_last_seven_days.to_i}.reverse[0..9].map{|p| [p, p.stats.followers_change_last_seven_days]}.reverse
+    people_with_stats.sort_by{|p| p.stats.followers_change_last_seven_days.to_i}.reverse[0..9].map{|p| [p, p.stats.followers_change_last_seven_days]}
   end
   
   def self.most_followers_last_thirty_days
     people_with_stats =  Person.all.select{|p| !p.stats.nil?}
-    people_with_stats.sort_by{|p| p.stats.followers_change_last_thirty_days.to_i}.reverse[0..9].map{|p| [p, p.stats.followers_change_last_thirty_days]}.reverse
+    people_with_stats.sort_by{|p| p.stats.followers_change_last_thirty_days.to_i}.reverse[0..9].map{|p| [p, p.stats.followers_change_last_thirty_days]}
   end
 
   def generate_unique_id

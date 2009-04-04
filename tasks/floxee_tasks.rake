@@ -28,7 +28,7 @@ namespace :floxee do
   desc "Fetch stats from TwitterCounter and FollowCost"
   task :fetch_stats => :environment do
     Person.all.each do |p|
-      p.stats.fetch
+      p.stats.fetch if p.stats
     end
   end
   
@@ -38,8 +38,13 @@ namespace :floxee do
       p.fetch_latest_statuses
     end
   end
-  
-  
+    
+  desc "Fetch latest twitter user profile info from Twitter api"
+  task :fetch_info => :environment do
+    Person.all.each do |p|
+      p.fetch_info
+    end
+  end
   
   
 end
