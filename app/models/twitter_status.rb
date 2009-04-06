@@ -37,7 +37,7 @@ class TwitterStatus < CouchRest::ExtendedDocument
   
   def self.search(options={})
     @tweets = TwitterStatus.cached_by_id
-    @tweets = @tweets.select{|t| t.text.downcase.include?(options[:q]) } unless options[:q].blank?
+    @tweets = @tweets.select{|t| t.text.downcase.include?(options[:q].downcase) } unless options[:q].blank?
     @tweets
   end
   
