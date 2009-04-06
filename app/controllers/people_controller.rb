@@ -7,6 +7,11 @@ class PeopleController < ApplicationController
     @people = Person.paginate(params)
     @reverse = params[:reverse]
     @sort_attribute = params[:sort]
+    begin
+      #@twitter_base ||= Twitter::Base.new('foo', 'bar')
+    rescue
+    end
+    
   end
   
 

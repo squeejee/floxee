@@ -2,7 +2,15 @@
 - avatar_size ||= "48x48"
 .person.vcard{:id => person.id}
   .more-info
-    %a.button.small.dark{:href => follow_person_path(person.id)} follow
+    %a.button.small.dark{:href => follow_person_path(person.id)}
+      - begin
+        - if false #@twitter_base and @twitter_base.friendship_exists?(current_user.login, person.screen_name)
+          = 'unfollow'
+        - else
+          = 'follow'
+      - rescue Exception => ex
+        - flash[:error] = ex.message
+        = 'follow'
   .more-info.stats
     %a{:href => person_path(person.id)}
       = image_tag("/images/chart-icon.png") 
