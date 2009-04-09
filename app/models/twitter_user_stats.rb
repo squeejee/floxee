@@ -1,38 +1,33 @@
-class TwitterUserStats < CouchRest::ExtendedDocument
-  use_database CouchRest.database!(Floxee.server)
-  
+class TwitterUserStats < MongoRecord::Base  
   # from twittercounter
   
-  property :followers_current
-  property :started_followers
-  property :growth_since
-  property :tomorrow
-  property :next_month
-  property :followers_yesterday
-  property :followers_2w_ago
-  property :growth_since_2w
-  property :tomorrow_2w
-  property :next_month_2w
-  property :average_growth
-  property :average_growth_2w
-  property :rank
-  property :followers_change_last_seven_days
-  property :followers_change_last_thirty_days
-  property :daily_stats, :cast_as => ['Array']
+  fields :followers_current
+  fields :started_followers
+  fields :growth_since
+  fields :tomorrow
+  fields :next_month
+  fields :followers_yesterday
+  fields :followers_2w_ago
+  fields :growth_since_2w
+  fields :tomorrow_2w
+  fields :next_month_2w
+  fields :average_growth
+  fields :average_growth_2w
+  fields :rank
+  fields :followers_change_last_seven_days
+  fields :followers_change_last_thirty_days
+  fields :daily_stats, :cast_as => ['Array']
   
   # from followcost
   
-  property :milliscobles_all_time
-  property :average_tweets_per_day
-  property :twitter_created_at
-  property :at_reply_index
-  property :milliscobles_recently
-  property :average_tweets_per_day_recently
-  property :political_index
-  
-  
-  view_by :screen_name
-  
+  fields :milliscobles_all_time
+  fields :average_tweets_per_day
+  fields :twitter_created_at
+  fields :at_reply_index
+  fields :milliscobles_recently
+  fields :average_tweets_per_day_recently
+  fields :political_index
+    
   def screen_name=value
     self['screen_name'] = value
     self.fetch

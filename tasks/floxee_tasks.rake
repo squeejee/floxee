@@ -9,19 +9,11 @@ namespace :floxee do
   task :bootstrap => :environment do
     people = File.open(RAILS_ROOT+'/vendor/plugins/floxee/db/bootstrap/people.yml') {|file| YAML::load(file)}
     
-    people.keys.each do |k|
-      begin
-        p = Person.get(k)
-      rescue RestClient::ResourceNotFound
-        p = Person.new
-      end
-      if p
-        p.merge! people[k]
-        puts "Importing #{p.display_name}"
-        p.save!
-      else
-        puts "Couldn't find or create user #{people[k]}"
-      end
+    people.values.each do |k|
+      person = Person.new k
+      person.save!
+      person.fetch_latest_statuses
+      person.fetch_info
     end
   end
   

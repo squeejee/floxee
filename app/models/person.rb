@@ -1,58 +1,40 @@
-class Person < CouchRest::ExtendedDocument
-  use_database CouchRest.database!(Floxee.server)
+class Person < MongoRecord::Base
+  collection_name :people
   
-  include CouchRest::Validation
-  
-  #save_callback :before, :generate_slug_from_name
-  save_callback :before, :fetch_info
-  save_callback :after, :fetch_stats
-  save_callback :after, :fetch_latest_statuses
-  
-  unique_id do |contact|
-    # TODO: Make this a recursive method to guarantee uniqueness
-    contact.generate_unique_id
-  end
-  
-  property :title
-  property :first_name
-  property :middle_name
-  property :last_name
-  property :nickname
-  property :name_suffix
-  property :gender
-  property :email
-  property :website
-  property :phone
-  property :fax
+  fields :title
+  fields :first_name
+  fields :middle_name
+  fields :last_name
+  fields :nickname
+  fields :name_suffix
+  fields :gender
+  fields :email
+  fields :website
+  fields :phone
+  fields :fax
   
   # twitter api properties
-  property :name
-  property :screen_name
-  property :location
-  property :description
-  property :profile_image_url
-  property :url
-  property :protected
-  property :followers_count
-  property :profile_background_color
-  property :profile_text_color
-  property :profile_link_color
-  property :profile_sidebar_fill_color
-  property :profile_sidebar_border_color
-  property :friends_count
-  property :favourites_count
-  property :utc_offset
-  property :statuses_count
+  fields :name
+  fields :screen_name
+  fields :location
+  fields :description
+  fields :profile_image_url
+  fields :url
+  fields :protected
+  fields :followers_count
+  fields :profile_background_color
+  fields :profile_text_color
+  fields :profile_link_color
+  fields :profile_sidebar_fill_color
+  fields :profile_sidebar_border_color
+  fields :friends_count
+  fields :favourites_count
+  fields :utc_offset
+  fields :statuses_count
+  fields :created_at
   
-  timestamps!
-  
-  validates_present :first_name, :last_name
-  
-  view_by :id, :descending => true
-  view_by :screen_name
-  view_by :last_name
-  
-  
+  has_many :statuses, :class_name => 'TwitterStatus'
+    
   def display_name
     "#{self.first_name} #{self.last_name}"
   end
@@ -73,9 +55,9 @@ class Person < CouchRest::ExtendedDocument
     unless self.screen_name.nil?
       begin
         user = JSON.parse(Net::HTTP.get(URI.parse("http://twitter.com/users/show/#{self.screen_name}.json")))
-        self.merge!(user) if user
-      rescue
-        puts "Problem getting Twitter info for #{self.display_name}"
+        self.update_attributes(user) if user
+      # rescue
+      #   puts "Problem getting Twitter info for #{self.display_name}"
       end
     end
   end
@@ -97,40 +79,45 @@ class Person < CouchRest::ExtendedDocument
     end
   end
   
-  def statuses
-    TwitterStatus.by_from_user(:key => self.screen_name)
-  end
-  
+
   def fetch_latest_statuses
     unless self.screen_name.nil?
       begin
         if self.statuses.blank?
           # self.statuses = []
           # multiple calls to get all statuses
-          page_count = (self.statuses_count/100) + 1
+          page_count = (self.statuses_count.to_i/100) + 1
           (1..(page_count)).each do |page|
             search = Twitter::Search.new.from(self.screen_name).page(page).per_page(100).fetch()
             #self.statuses.concat search['results']
             search['results'].each do |tweet|
               ts = TwitterStatus.new(tweet)
               ts.person_id = self.id
+              ts.status_id = ts.id
+              ts.id = ""
               ts.save
+              self.statuses << ts
+              self.save
             end
           end      
         else
-          last_id = self.statuses.map{|status| status.id}.max
+          last_id = self.statuses.map{|status| status.status_id}.max
           search = Twitter::Search.new.from(self.screen_name).since(last_id).fetch()
           #self.statuses.concat(search['results']).uniq!      
           search['results'].each do |tweet|
             ts = TwitterStatus.new(tweet)
             ts.person_id = self.id
+            ts.status_id = ts.id
+            ts.id = ""
             ts.save
+            self.statuses << ts
+            self.save
           end
         end
         # Refresh the TwitterStatus cache if new results are returned
-        TwitterStatus.cached_by_id(true) if search['results'].size > 0
-      rescue
-        puts "Problem getting tweets for #{self.display_name}"
+ #       TwitterStatus.cached_by_id(true) if search['results'].size > 0
+#      rescue
+#        puts "Problem getting tweets for #{self.display_name}"
       end
     end
   end
@@ -178,6 +165,10 @@ class Person < CouchRest::ExtendedDocument
       max_ordinal = people.map {|person| person.id_ordinal}.max
       unique_id + "-" + (max_ordinal + 1).to_s
     end
+  end
+  
+  def twitter_api_fetch
+    search = Twitter::Search.new.from(self.screen_name).fetch()['results']
   end
   
 end

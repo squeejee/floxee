@@ -1,23 +1,24 @@
-class TwitterStatus < CouchRest::ExtendedDocument
-  use_database CouchRest.database!(Floxee.server)
+class TwitterStatus < MongoRecord::Base
+  collection_name :twitter_statuses
   
-  property  :id
-  property  :text
-  property  :from_user_id
-  property  :from_user
-  property  :to_user_id
-  property  :to_user
-  property  :iso_language_code
-  property  :source
-  property  :profile_image_url
-  property  :person_id
-  property  :created_at, :cast_as => Time
-  
-  view_by :id, :descending => true
-  view_by :from_user
-  
+  fields  :status_id
+  fields  :text
+  fields  :from_user_id
+  fields  :from_user
+  fields  :to_user_id
+  fields  :to_user
+  fields  :iso_language_code
+  fields  :source
+  fields  :profile_image_url
+  fields  :person_id
+  fields  :created_at
+    
   def person
-    Rails.cache.fetch("people-#{self.person_id}", :expires_in => 60*10) {Person.get(self.person_id)}
+    contact
+  end
+  
+  def contact
+    Person.find(self.person_id)
   end
   
   def self.paginate(options={})
@@ -27,17 +28,22 @@ class TwitterStatus < CouchRest::ExtendedDocument
     options[:per_page] = options[:per_page].to_i
     options[:page] = options[:page].to_i
     
-    @tweets = TwitterStatus.search(options)
-    
-    unless options[:screen_names].blank?
-      @tweets = @tweets.select{|t| options[:screen_names].split(',').include?(t.from_user) }
+    if options[:q].blank?
+      @tweets = TwitterStatus.find(:all, :order => "created_at DESC").to_a
+    else
+      @tweets = TwitterStatus.search(options)
     end
+    
+    # unless options[:screen_names].blank?
+    #   @tweets = @tweets.find_by_screen_name(options[:screen_names])
+    # end
     @tweets.paginate(:page => options[:page], :per_page => options[:per_page])
   end
   
   def self.search(options={})
-    @tweets = TwitterStatus.cached_by_id
-    @tweets = @tweets.select{|t| t.text.downcase.include?(options[:q]) } unless options[:q].blank?
+    #@tweets = TwitterStatus.cached_by_id
+    @tweets = TwitterStatus.find_all_by_text(/#{options[:q]}/, :order => "created_at DESC").to_a
+   # @tweets = @tweets.select{|t| t.text.downcase.include?(options[:q]) } unless options[:q].blank?
     @tweets
   end
   

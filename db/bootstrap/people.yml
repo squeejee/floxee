@@ -1,6 +1,5 @@
 --- 
 wynn: 
-  id: "1"
   nickname:
   middle_name:
   gender: M
@@ -13,7 +12,6 @@ wynn:
   screen_name: pengwynn
   
 jim: 
-  id: "2"
   nickname:
   middle_name:
   gender: M
@@ -27,7 +25,6 @@ jim:
 
     
 chris: 
-  id: "3"
   nickname:
   middle_name:
   gender: M
@@ -40,7 +37,6 @@ chris:
   screen_name: chrismccroskey
 
 jason: 
-  id: "4"
   nickname:
   middle_name:
   gender: M
@@ -54,7 +50,6 @@ jason:
     
 
 bradley: 
-  id: "5"
   nickname:
   middle_name:
   gender: M
@@ -67,7 +62,6 @@ bradley:
   screen_name: bradleyjoyce
 
 clee: 
-  id: "6"
   nickname:
   middle_name:
   gender: M

@@ -1,4 +1,5 @@
 class MainController < ApplicationController
+  helper :all
   
   def index
     @page_title = t('home_title')
