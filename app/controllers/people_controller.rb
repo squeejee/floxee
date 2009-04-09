@@ -4,22 +4,16 @@ class PeopleController < ApplicationController
   
   def index
     @page_title = t('people')
-    @people = Person.paginate(params)
-    @reverse = params[:reverse]
-    @sort_attribute = params[:sort]
-    begin
-      #@twitter_base ||= Twitter::Base.new('foo', 'bar')
-    rescue
-    end
-    
+    opts = { :page => params[:page], :order => 'users.followers_count DESC', :include => :user }
+    opts[:order] = params[:sort] unless params[:sort].blank?
+    opts[:conditions] = ["concat(people.first_name, ' ', people.last_name) like ? or concat(people.nickname, ' ', people.last_name) like ?", "%#{params[:q]}%","%#{params[:q]}%"] unless params[:q].blank?
+    @people = Person.paginate opts
   end
   
 
   def show
     if @person.tweets?
       @page_title = t('person_is_on_twitter', :name => @person.display_name)
-      @tweets = TwitterStatus.paginate(params.merge({:screen_names => @person.screen_name}))
-      
     else
       @page_title = t('person_is_on_not_twitter', :name => @person.display_name)
     end
@@ -28,15 +22,9 @@ class PeopleController < ApplicationController
   
   def follow
     if @person and @person.tweets?
-      begin
-        #twitter_response = JSON.parse(current_user.twitter.post("http://twitter.com/friendships/create/#{@person.screen_name}.json"))
-        twitter_response = current_user.twitter.post("http://twitter.com/friendships/create/#{@person.screen_name}.json")
-        flash[:notice] = t('you_are_now_following', :name => @person.screen_name)
-      rescue Exception => ex
-        flash[:notice] = ex.message
-      end
+      twitter_response = JSON.parse(current_user.twitter.post("http://twitter.com/friendships/create/#{@person.screen_name}.json"))
+      flash[:notice] = t('you_are_now_following', :name => @person.screen_name)
     end
-    redirect_to people_url
   end
   
   def follow_all
@@ -45,7 +33,10 @@ class PeopleController < ApplicationController
   
   protected
     def find_person
-      @person = Person.get(params[:id])
+      @person = Person.find(params[:id])
+      opts = {:page => params[:page], :order => 'statuses.id DESC', :include => :user}
+      opts[:conditions] = ["statuses.text like ?", "%#{params[:q]}%"] unless params[:q].blank?
+      @tweets = @person.user.statuses.paginate opts
     end
 
 end

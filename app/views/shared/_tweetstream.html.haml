@@ -13,9 +13,9 @@
 %ul.tweetstream
   - tweets[0..(limit-1)].each do |tweet|
     %li{:class => cycle('', 'alt')}
-      = link_to(image_tag(tweet.person.profile_image_url.gsub(/_normal./, '_bigger.'), :size => avatar_size), twitter_user_url(tweet.from_user), :class => 'avatar')
-      = link_to tweet.person.display_name, person_path(tweet.person_id)
-      = ": #{twitter_auto_link highlight(tweet.text, params[:q])}"
+      = link_to(image_tag(tweet.user.profile_image_url.gsub(/_normal./, '_bigger.'), :size => avatar_size), twitter_user_url(tweet.user.screen_name), :class => 'avatar')
+      = detail_link_for_tweet(tweet)
+      = ": #{twitter_auto_link tweet.text}"
       %a.timeago{:title => tweet.created_at.iso8601, :href => twitter_status_path(tweet)}= tweet.created_at.zone.to_s
 - if show_pagination
   = will_paginate(@tweets, :previous_label => t('previous'), :next_label => t('next'))

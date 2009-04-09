@@ -1,4 +1,5 @@
-- person ||= @person
+- user = @person.user if @person and user.nil?
+- user = @organization.user if @organization and user.nil?
 
 - content_for :scripts do 
   :javascript
@@ -17,7 +18,7 @@
          }
        };
        
-       var data = #{person.stats.totals.reverse.to_json};
+       var data = #{user.daily_stats.map{|total| [total.report_date.to_i*1000, total.followers_count]}.reverse.to_json};
        
 
        $.plot($("#graph"), [data], options );

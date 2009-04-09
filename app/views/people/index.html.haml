@@ -16,8 +16,8 @@
     %label
       = "#{t('sort_by')}:"
       %select{:name => 'sort'}
-        %option{:value => 'last_name'}= t('last_name')
-        %option{:value => 'followers_count'}= t('followers')
+        %option{:value => 'people.last_name'}= t('last_name')
+        %option{:value => 'users.followers_count'}= t('followers')
     %label
       = "#{t('direction')}:"
       %select{:name => 'reverse'}

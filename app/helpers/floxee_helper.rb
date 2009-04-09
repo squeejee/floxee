@@ -21,7 +21,7 @@ module FloxeeHelper
   end
   
   def twitter_status_path(status)
-    "http://twitter.com/#{status.from_user}/statuses/#{status.id}"
+    "http://twitter.com/#{status.user.screen_name}/status/#{status.id}"
   end
   
   def twitter_profile_image(twitter_user, options={})
@@ -40,6 +40,16 @@ module FloxeeHelper
   def user_profile_image(size='mini', options={})
     return unless logged_in?
     image_tag(user_profile_image_path(size), options)
+  end
+  
+  def detail_link_for_tweet(tweet)
+    if tweet.person
+      link_to tweet.person.display_name, person_path(tweet.person)
+    elsif tweet.organization
+      link_to tweet.organization.display_name, organization_path(tweet.organization)
+    else
+      link_to tweet.user.screen_name, twitter_user_url(tweet.user.screen_name)
+    end
   end
   
   def icon(filename)

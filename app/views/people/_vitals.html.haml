@@ -1,19 +1,21 @@
-- person ||= @person
+- user = @person.user if @person and user.nil?
+- user = @organization.user if @organization and user.nil?
+
 %h3
   = t('twitter_vitals')
   %small
     = t('powered_by')
-    = link_to 'follow cost', "http://followcost.com/#{@person.screen_name}"
+    = link_to 'follow cost', "http://followcost.com/#{user.screen_name}"
 %dl.span-8
   %dt= t('average_tweets_per_day')
-  %dd= number_with_precision(person.stats.average_tweets_per_day.to_f)
+  %dd= number_with_precision(user.stats.average_tweets_per_day.to_f)
   %dt= t('average_tweets_per_day_recently')
-  %dd= number_with_precision(person.stats.average_tweets_per_day_recently.to_f)
+  %dd= number_with_precision(user.stats.average_tweets_per_day_recently.to_f)
   %dt
     = t('at_reply_index')
     %img.tip{ :src => "/images/question.png", :title => "The @ reply index is the percentage of recent tweets that are @ replies", :alt => "what is the @ reply index"}
-  %dd= person.stats.at_reply_index
+  %dd= user.stats.at_reply_index
   %dt
     = t('political_index')
     %img.tip{ :src => "/images/question.png", :title => "The political index is the percentage of recent tweets that mention politics", :alt => "what is the political index"}
-  %dd= person.stats.political_index
+  %dd= user.stats.political_index

@@ -1,5 +1,5 @@
 - unless params[:q].blank?
-  %h3.search-filter
+  %h3.search-filter.clear
     = t('searching_for')
     %em= params[:q]
     = link_to t('clear'), {:q => nil}, :class => 'clear-search'

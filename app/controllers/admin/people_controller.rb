@@ -5,7 +5,10 @@ class Admin::PeopleController < ApplicationController
   
   def index    
     @page_title = t('people_admin')
-    @people = Person.paginate(params)
+    opts = { :page => params[:page], :order => 'users.followers_count DESC', :include => :user }
+    opts[:order] = params[:sort] unless params[:sort].blank?
+    opts[:conditions] = ["concat(people.first_name, ' ', people.last_name) like ? or concat(people.nickname, ' ', people.last_name) like ?", "%#{params[:q]}%","%#{params[:q]}%"] unless params[:q].blank?
+    @people = Person.paginate opts
     
     render :layout => false if request.xhr?
   end
@@ -55,6 +58,6 @@ class Admin::PeopleController < ApplicationController
   
   protected
     def find_person
-      @person = Person.get(params[:id])
+      @person = Person.find(params[:id])
     end
 end

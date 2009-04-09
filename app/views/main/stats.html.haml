@@ -7,3 +7,14 @@
 .span-7.last
   = render :partial => 'shared/ranking', :locals => {:header => t('most_followed'), :tweeters => @most_followed, :stat_field => 'followers_count'}
   = render :partial => 'shared/ranking', :locals => {:header => t('most_active'), :tweeters => @most_active, :stat_field => 'statuses_count' }
+  
+- content_for :scripts do
+  :javascript
+    jQuery(document).ready(function() {
+      $('dd').each(function() {
+        var bar = $(this);
+        var w = bar.css('width').replace('px', '');
+        bar.css('width', '0px');
+        bar.animate({width: w+'px'}, 1000);
+      });
+    });
