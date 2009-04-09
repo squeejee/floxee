@@ -31,9 +31,13 @@ class Stats < ActiveRecord::Base
     # update FollowCost stats: http://followcost.com/pengwynn.json
     info = Net::HTTP.get(URI.parse("http://followcost.com/#{self.user.screen_name}.json"))
     unless info.blank?
-      info = JSON.parse(info)
-      info.keys.each do |key|
-        self[key] = info[key] if self.respond_to?(key)
+      begin
+        info = JSON.parse(info)
+        info.keys.each do |key|
+          self[key] = info[key] if self.respond_to?(key)
+        end
+      rescue
+        # Probably info contains "Twitter user not found" so it ain't JSON
       end
     end
     self.save
