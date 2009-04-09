@@ -7,10 +7,10 @@
       %small= t('stats')
   .more-info
     %a{:href => person_path(person.id)}
-      = person.followers_count.to_i
+      = person.followers_count.to_i if person.user
       %small= t('followers')
   .more-info.first= follow_person_link(person)
   %a.avatar{:href => person_path(person.id)}
-    = twitter_profile_image(person)
+    = twitter_profile_image(person) if person.user
   %h3.snug= link_to person.display_name, person_path(person.id), :class => 'fn url'
-  %p.bio= person.description
+  %p.bio= person.description if person.user
