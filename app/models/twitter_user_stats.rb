@@ -35,7 +35,9 @@ class TwitterUserStats < MongoRecord::Base
   
   def self.fetch(screen_name)
     return if screen_name.blank?
-    stats = TwitterUserStats.new(JSON.parse(Net::HTTP.get(URI.parse("http://twittercounter.com/api/?username=#{screen_name}&output=json&results=365"))))
+    counter_stats = JSON.parse(Net::HTTP.get(URI.parse("http://twittercounter.com/api/?username=#{screen_name}&output=json&results=365")))
+    vitals = JSON.parse(Net::HTTP.get(URI.parse("http://followcost.com/#{screen_name}.json")))
+    stats = TwitterUserStats.new(counter_stats.merge(vitals))
     # stats come in from TwitterCounter in a hash
     # converting to an array for easier access
     # follower_counts = self.delete('followersperdate')
@@ -53,6 +55,6 @@ class TwitterUserStats < MongoRecord::Base
     # end
     
     # fetch stats from followcost.com
-#    self.merge!(JSON.parse(Net::HTTP.get(URI.parse("http://followcost.com/#{screen_name}.json"))))
+    #self.merge!(JSON.parse(Net::HTTP.get(URI.parse("http://followcost.com/#{screen_name}.json"))))
   end
 end

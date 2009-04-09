@@ -28,24 +28,11 @@ class TwitterStatus < MongoRecord::Base
     options[:per_page] = options[:per_page].to_i
     options[:page] = options[:page].to_i
     
-    if options[:q].blank?
-      @tweets = TwitterStatus.find(:all, :order => "status_id DESC").to_a
-    else
-      @tweets = TwitterStatus.search(options)
-    end
-    
-    unless options[:screen_name].blank?
-      @tweets = Person.find_by_screen_name(options[:screen_name]).statuses
-    end
+    @tweets = TwitterStatus.find(:all, :conditions=>{:text=>/#{options[:q]}/, :from_user=>/#{options[:screen_names]}/}, :order => "status_id DESC").to_a
+
     @tweets.paginate(:page => options[:page], :per_page => options[:per_page])
   end
   
-  def self.search(options={})
-    #@tweets = TwitterStatus.cached_by_id
-    @tweets = TwitterStatus.find_all_by_text(/#{options[:q]}/, :order => "status_id DESC").to_a
-   # @tweets = @tweets.select{|t| t.text.downcase.include?(options[:q]) } unless options[:q].blank?
-    @tweets
-  end
   
   def self.cached_by_id(force = false)
     Rails.cache.fetch('tweets', :force => force) {TwitterStatus.by_id}
