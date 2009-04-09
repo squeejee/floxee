@@ -52,6 +52,12 @@ module FloxeeHelper
     end
   end
   
+  def follow_person_link(person, text=t('follow'), options={})
+    opts = {:class => 'button small dark'}
+    opts.merge!(options)
+    link_to(text, follow_person_path(person), opts) unless (logged_in? and current_user == person.user)
+  end
+  
   def icon(filename)
     image_tag('/images/icons/fugue/' + filename + '.png')
   end

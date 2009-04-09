@@ -10,6 +10,7 @@ class Person < ActiveRecord::Base
   
   def screen_name=(value)
     self.user = User.find_or_create_by_screen_name(value)
+    self.save
   end
   
   def screen_name

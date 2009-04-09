@@ -1,8 +1,6 @@
 - person ||= @person
 - avatar_size ||= "48x48"
 .person.vcard{:id => person.id}
-  .more-info
-    %a.button.small.dark{:href => follow_person_path(person.id)} follow
   .more-info.stats
     %a{:href => person_path(person.id)}
       = image_tag("/images/chart-icon.png") 
@@ -11,6 +9,7 @@
     %a{:href => person_path(person.id)}
       = person.followers_count.to_i
       %small= t('followers')
+  .more-info.first= follow_person_link(person)
   %a.avatar{:href => person_path(person.id)}
     = twitter_profile_image(person)
   %h3.snug= link_to person.display_name, person_path(person.id), :class => 'fn url'

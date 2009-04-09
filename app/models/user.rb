@@ -66,9 +66,10 @@ class User < TwitterAuth::GenericUser
       info = User.twitter_client.users.show.json(:screen_name => screen_name)
       u = User.find_or_create_by_id(info.id)
       u.assign_twitter_attributes(info.marshal_dump.stringify_keys)
+      u.id = info.id
       u.login = info.screen_name
       u.last_synced_at = Time.now
-      u.save
+      u.save!
       u
     rescue Grackle::TwitterError
       RAILS_DEFAULT_LOGGER.error "Could not retrieve user #{screen_name}"

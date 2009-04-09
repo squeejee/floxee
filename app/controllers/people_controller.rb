@@ -22,13 +22,19 @@ class PeopleController < ApplicationController
   
   def follow
     if @person and @person.tweets?
-      twitter_response = JSON.parse(current_user.twitter.post("http://twitter.com/friendships/create/#{@person.screen_name}.json"))
-      flash[:notice] = t('you_are_now_following', :name => @person.screen_name)
+      begin
+        twitter_response = current_user.twitter.post("http://twitter.com/friendships/create/#{@person.screen_name}.json")
+        flash[:notice] = t('you_are_now_following', :name => @person.screen_name)
+      rescue Exception => e
+        flash[:notice] = e.message
+      end
     end
+    redirect_to people_path
   end
   
   def follow_all
     render :text => 'foobar'
+    redirect_to people_path
   end
   
   protected
