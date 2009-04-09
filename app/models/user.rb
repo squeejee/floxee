@@ -3,9 +3,9 @@ class User < TwitterAuth::GenericUser
   # All of the authentication logic is handled by the 
   # parent TwitterAuth::GenericUser class.
 
-  has_one :stats, :class_name => "Stats"
-  has_many :daily_stats, :class_name => "DailyStats", :order => 'report_date ASC'
-  has_many :statuses, :order => 'id DESC'
+  has_one :stats, :class_name => "Stats", :dependent => :destroy
+  has_many :daily_stats, :class_name => "DailyStats", :order => 'report_date ASC', :dependent => :destroy
+  has_many :statuses, :order => 'id DESC', :dependent => :destroy
   
   named_scope :synced, :conditions => ['last_synced_at IS NOT NULL']
   
@@ -66,9 +66,10 @@ class User < TwitterAuth::GenericUser
       info = User.twitter_client.users.show.json(:screen_name => screen_name)
       u = User.find_or_create_by_id(info.id)
       u.assign_twitter_attributes(info.marshal_dump.stringify_keys)
+      u.id = info.id
       u.login = info.screen_name
       u.last_synced_at = Time.now
-      u.save
+      u.save!
       u
     rescue Grackle::TwitterError
       RAILS_DEFAULT_LOGGER.error "Could not retrieve user #{screen_name}"

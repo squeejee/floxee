@@ -58,8 +58,9 @@ body
   .snug
     :margin-bottom 0
     
-  #topwrap
-    :background = !baby_blue
+  #sky
+    :background url(/images/flash-clouds.png) 0px 0px repeat-x
+    :background-color = !baby_blue
   #wrapper
     :padding-bottom 20px
     .container, #content
@@ -248,6 +249,11 @@ body
         :text-decoration none
         :border-bottom-style dotted 
         :border-bottom-width 1px
+      a.timeago,
+      a.in-reply-to,
+      em.from
+        :font-size 85%
+
 
   .pagination-info
     :float left
@@ -288,6 +294,8 @@ body
         //:border-width 0 0 0 1px
         :background transparent url(/images/groove.gif) 0px 0px repeat-y
         :padding-left 10px
+        &.first
+          :background none
         a
           :color = !dark_blue
           &.button
@@ -545,6 +553,8 @@ body.admin
         :right 40px
         :text-align right
         :font-weight normal
+
+  
   #impact
     :display none
 

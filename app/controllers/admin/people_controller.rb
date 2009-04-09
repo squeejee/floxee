@@ -1,7 +1,8 @@
 class Admin::PeopleController < ApplicationController
-    
-  before_filter :find_person, :only => [:edit, :update, :destroy]
-  before_filter :login_required
+  before_filter :login_required    
+  before_filter :find_person, :only => [:edit, :update, :destroy, :confirm_destroy]
+  before_filter :ensure_current_person_url, :only => :show
+
   
   def index    
     @page_title = t('people_admin')
@@ -56,8 +57,18 @@ class Admin::PeopleController < ApplicationController
     redirect_to(admin_people_url) 
   end
   
+  # GET /admin/people/chris-lee/confirm_destroy
+  def confirm_destroy
+    
+  end
+  
   protected
     def find_person
       @person = Person.find(params[:id])
     end
+    
+    def ensure_current_person_url
+      redirect_to @person, :status => :moved_permanently if @person.has_better_id?
+    end
+    
 end

@@ -2,7 +2,9 @@
 - avatar_size ||= "36x36"
 - show_pagination ||= false
 - header_text ||= t('tweetstream')
-- header_link_path ||= (@person ? tweetstream_person_path(@person.id) : tweetstream_path)
+- header_link_path ||= (@person ? tweetstream_person_path(@person) : tweetstream_path)
+- show_source ||= true
+- show_in_reply ||= true 
 - limit ||= 0
 
 - unless header_text.blank?
@@ -16,6 +18,13 @@
       = link_to(image_tag(tweet.user.profile_image_url.gsub(/_normal./, '_bigger.'), :size => avatar_size), twitter_user_url(tweet.user.screen_name), :class => 'avatar')
       = detail_link_for_tweet(tweet)
       = ": #{twitter_auto_link tweet.text}"
-      %a.timeago{:title => tweet.created_at.iso8601, :href => twitter_status_path(tweet)}= tweet.created_at.zone.to_s
+      - unless tweet.in_reply_to_status_id.blank? or not show_in_reply
+        %a.in-reply-to{:href => twitter_status_path(tweet.in_reply_to_screen_name, tweet.in_reply_to_status_id)}= t('in_reply_to')
+        %a.in-reply-to{:href => twitter_user_url(tweet.in_reply_to_screen_name)}= "@#{tweet.in_reply_to_screen_name}"
+      %a.timeago{:title => tweet.created_at.iso8601, :href => twitter_status_path(tweet.user.screen_name, tweet.id)}= tweet.created_at.zone.to_s
+      - unless tweet.source.nil? or not show_source
+        %em.from
+          = t('from')
+          = tweet.source
 - if show_pagination
   = will_paginate(@tweets, :previous_label => t('previous'), :next_label => t('next'))

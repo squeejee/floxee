@@ -20,8 +20,8 @@ module FloxeeHelper
      "#{twitter_user_url(screen_name)}/followers"
   end
   
-  def twitter_status_path(status)
-    "http://twitter.com/#{status.user.screen_name}/status/#{status.id}"
+  def twitter_status_path(screen_name, status_id)
+    "http://twitter.com/#{screen_name}/status/#{status_id}"
   end
   
   def twitter_profile_image(twitter_user, options={})
@@ -50,6 +50,12 @@ module FloxeeHelper
     else
       link_to tweet.user.screen_name, twitter_user_url(tweet.user.screen_name)
     end
+  end
+  
+  def follow_person_link(person, text=t('follow'), options={})
+    opts = {:class => 'button small dark'}
+    opts.merge!(options)
+    link_to(text, follow_person_path(person), opts) unless (logged_in? and current_user == person.user)
   end
   
   def icon(filename)

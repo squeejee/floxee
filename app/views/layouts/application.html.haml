@@ -10,6 +10,10 @@
     %script{ :type => "text/javascript", :src => "http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js" }
     = javascript_include_tag 'jquery.timeago.js', 'jquery.flot.js',  'application.js'
     = yield :scripts
+    :javascript
+      jQuery(document).ready(function($) {
+        $('#flash').animate({opacity: 1.0}, 4000).fadeOut('slow');
+      });
     %meta{ :content => "text/html;charset=UTF-8", "http-equiv" => "content-type" }
     %title
       = "#{@page_title}"
@@ -23,18 +27,20 @@
   - body_classes = [@controller.controller_name]
   - body_classes << 'admin' if is_admin
   %body{:class => body_classes.join(' ')}
-    #topwrap
-      #wrapper.container
+    #sky
+      #topwrap
+        #wrapper.container
       
-        #header
-          = render :partial => 'shared/top_nav'
-          %br.clear
-        #content
-          - flash.each do |key, value|
-            %h4#flash{ :class => key }
-              = value
-        
-          = yield
+          #header
+            = render :partial => 'shared/top_nav'
+            %br.clear
+          #content
+            - unless flash.keys.empty?
+              #flash
+                - flash.each do |key, value|
+                  %h2#flash{ :class => key }
+                    = value
+            = yield
     #footer
       .container
         %ul.fr

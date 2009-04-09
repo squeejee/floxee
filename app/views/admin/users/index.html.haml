@@ -1,0 +1,22 @@
+= render :partial => 'people/search_form'
+%h1= t('users')
+= render :partial => 'shared/search_filter'
+#people
+  - unless @users.empty?
+
+    %br.clear
+    %table.people.floxee-admin.index
+      %tr
+        %th= t('name')
+        %th= t('screen_name')
+        %th= t('admin')
+
+      - for user in @users
+        %tr{:class => cycle('', 'alt')}
+          %td.name= user.name
+          %td.name= user.login
+          %td.name
+            - form_for([:admin, user], :method => :put) do |f|
+              = f.check_box :admin, :class => 'isadmin'
+              = f.submit 'update', :class => 'button small'
+          
