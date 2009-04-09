@@ -14,6 +14,7 @@ namespace :floxee do
       person.save!
       person.fetch_latest_statuses
       person.fetch_info
+      person.fetch_stats
     end
   end
   

@@ -34,6 +34,7 @@ class Person < MongoRecord::Base
   fields :created_at
   
   has_many :statuses, :class_name => 'TwitterStatus'
+  has_one :stats, :class_name => 'TwitterUserStats'
     
   def display_name
     "#{self.first_name} #{self.last_name}"
@@ -47,10 +48,6 @@ class Person < MongoRecord::Base
     not self.screen_name.blank?
   end
   
-  def stats
-     TwitterUserStats.by_screen_name(:key => self.screen_name).first
-  end
-
   def fetch_info
     unless self.screen_name.nil?
       begin
@@ -65,16 +62,12 @@ class Person < MongoRecord::Base
   def fetch_stats
     unless self.screen_name.nil?
       begin
-      stats = TwitterUserStats.by_screen_name(:key => self.screen_name).first
-        if stats
-          stats.destroy
-        else
-          stats = TwitterUserStats.new
-          stats.screen_name = self.screen_name
-        end
-        stats.save
-      rescue
-        puts "Problem getting TwitterCounter stats for #{self.display_name}"
+        self.stats = []
+        stats = TwitterUserStats.fetch(self.screen_name)
+        self.stats = stats
+        self.save
+#      rescue
+#        puts "Problem getting TwitterCounter stats for #{self.display_name}"
       end
     end
   end

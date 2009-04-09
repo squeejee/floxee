@@ -20,8 +20,8 @@ class PeopleController < ApplicationController
   
   protected
     def find_person
-      @person = Person.get(params[:id])
-      @tweets = TwitterStatus.paginate(params.merge({:screen_names => @person.screen_name}))
+      @person = Person.find("#{params[:id]}")
+      @tweets = TwitterStatus.paginate(params.merge({:screen_name => @person.screen_name}))
       
     end
 
