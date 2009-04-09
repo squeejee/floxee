@@ -1,4 +1,6 @@
 class Person < ActiveRecord::Base
+  has_friendly_id :display_name, :use_slug => true
+  
   belongs_to :user
   
   delegate :followers_count, :friends_count, :statuses_count, :profile_image_url, :description, :to => :user

@@ -1,5 +1,6 @@
 class PeopleController < ApplicationController
   before_filter :find_person, :only => [:show, :tweetstream, :follow]
+  before_filter :ensure_current_person_url, :only => :show
   before_filter :login_required, :only => [:follow, :follow_all]
   
   def index
@@ -44,5 +45,10 @@ class PeopleController < ApplicationController
       opts[:conditions] = ["statuses.text like ?", "%#{params[:q]}%"] unless params[:q].blank?
       @tweets = @person.user.statuses.paginate opts
     end
+    
+    def ensure_current_person_url
+      redirect_to @person, :status => :moved_permanently if @person.has_better_id?
+    end
+    
 
 end
