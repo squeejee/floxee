@@ -35,10 +35,11 @@
             = render :partial => 'shared/top_nav'
             %br.clear
           #content
-            #flash
-              - flash.each do |key, value|
-                %h2#flash{ :class => key }
-                  = value
+            - unless flash.keys.empty?
+              #flash
+                - flash.each do |key, value|
+                  %h2#flash{ :class => key }
+                    = value
             = yield
     #footer
       .container
