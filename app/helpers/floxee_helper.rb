@@ -20,8 +20,8 @@ module FloxeeHelper
      "#{twitter_user_url(screen_name)}/followers"
   end
   
-  def twitter_status_path(status)
-    "http://twitter.com/#{status.user.screen_name}/status/#{status.id}"
+  def twitter_status_path(screen_name, status_id)
+    "http://twitter.com/#{screen_name}/status/#{status_id}"
   end
   
   def twitter_profile_image(twitter_user, options={})
