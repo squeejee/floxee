@@ -21,6 +21,10 @@ class PeopleController < ApplicationController
    
   end
   
+  def tweetstream
+    @page_title = t('persons_tweetstream', :name => @person.display_name)
+  end
+  
   def follow
     if @person and @person.tweets?
       begin
