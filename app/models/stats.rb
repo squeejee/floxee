@@ -29,8 +29,9 @@ class Stats < ActiveRecord::Base
     end
     
     # update FollowCost stats: http://followcost.com/pengwynn.json
-    info = JSON.parse(Net::HTTP.get(URI.parse("http://followcost.com/#{self.user.screen_name}.json")))
+    info = Net::HTTP.get(URI.parse("http://followcost.com/#{self.user.screen_name}.json"))
     unless info.blank?
+      info = JSON.parse(info)
       info.keys.each do |key|
         self[key] = info[key] if self.respond_to?(key)
       end
