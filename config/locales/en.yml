@@ -23,7 +23,7 @@ en:
   or: or
   confirm_destroy: Confirm destroy
   destroy: Destroy
-  are_you_sure_you_want_to_destroy_this_item: Are you sure you want to destroy this item?
+  are_you_sure_you_want_to_destroy: "Are you sure you want to destroy <strong>{{name}}</strong>?"
   add: Add
   email: Email
   first_name: First name

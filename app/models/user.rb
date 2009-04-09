@@ -3,9 +3,9 @@ class User < TwitterAuth::GenericUser
   # All of the authentication logic is handled by the 
   # parent TwitterAuth::GenericUser class.
 
-  has_one :stats, :class_name => "Stats"
-  has_many :daily_stats, :class_name => "DailyStats", :order => 'report_date ASC'
-  has_many :statuses, :order => 'id DESC'
+  has_one :stats, :class_name => "Stats", :dependent => :destroy
+  has_many :daily_stats, :class_name => "DailyStats", :order => 'report_date ASC', :dependent => :destroy
+  has_many :statuses, :order => 'id DESC', :dependent => :destroy
   
   named_scope :synced, :conditions => ['last_synced_at IS NOT NULL']
   

@@ -1,0 +1,7 @@
+%h1= t('confirm_destroy')
+%h3= t('are_you_sure_you_want_to_destroy', :name => @person.display_name)
+
+- form_for([:admin, @person], :html => {:method => :delete}) do
+  .form-buttons
+    %button.primary= t('destroy')
+    %a.button.cancel{:href => admin_people_path}= t('cancel')

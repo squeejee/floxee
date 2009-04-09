@@ -1,6 +1,6 @@
 class Admin::PeopleController < ApplicationController
     
-  before_filter :find_person, :only => [:edit, :update, :destroy]
+  before_filter :find_person, :only => [:edit, :update, :destroy, :confirm_destroy]
   before_filter :login_required
   
   def index    
@@ -54,6 +54,11 @@ class Admin::PeopleController < ApplicationController
     
     flash[:notice] = "#{@person.display_name} was deleted."
     redirect_to(admin_people_url) 
+  end
+  
+  # GET /admin/people/chris-lee/confirm_destroy
+  def confirm_destroy
+    
   end
   
   protected
