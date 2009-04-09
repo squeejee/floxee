@@ -15,6 +15,7 @@ class TwitterUserStats < MongoRecord::Base
   fields :average_growth
   fields :average_growth_2w
   fields :rank
+  fields :follower_counts
   fields :followers_change_last_seven_days
   fields :followers_change_last_thirty_days
   fields :daily_stats
@@ -40,21 +41,18 @@ class TwitterUserStats < MongoRecord::Base
     stats = TwitterUserStats.new(counter_stats.merge(vitals))
     # stats come in from TwitterCounter in a hash
     # converting to an array for easier access
-    # follower_counts = self.delete('followersperdate')
-    # if follower_counts
-    #   follower_counts = follower_counts.to_a
-    #   follower_counts.map! do |day|
-    #     date = Date.parse(day[0].gsub('date', ''))
-    #     count = day[1].to_i
-    #     [date, count]
-    #   end
-    #   follower_counts = follower_counts.sort_by{|day| day[0]}
-    #   self.daily_stats = follower_counts.reverse
-    #   self.followers_change_last_seven_days = (self.daily_stats[0][1].to_i - self.daily_stats[6][1].to_i) rescue nil
-    #   self.followers_change_last_thirty_days = (self.daily_stats[0][1].to_i - self.daily_stats[29][1].to_i) rescue nil
-    # end
-    
-    # fetch stats from followcost.com
-    #self.merge!(JSON.parse(Net::HTTP.get(URI.parse("http://followcost.com/#{screen_name}.json"))))
+    stats.follower_counts = stats.followersperdate.to_a
+    if stats.follower_counts
+      stats.follower_counts.map! do |day|
+        date = Date.parse(day[0].gsub('date', ''))
+        count = day[1].to_i
+        [date, count]
+      end
+      stats.follower_counts = stats.follower_counts.sort_by{|day| day[0]}
+      stats.daily_stats = stats.follower_counts.reverse
+      stats.followers_change_last_seven_days = (stats.daily_stats[0][1].to_i - stats.daily_stats[6][1].to_i) rescue nil
+      stats.followers_change_last_thirty_days = (stats.daily_stats[0][1].to_i - stats.daily_stats[29][1].to_i) rescue nil
+    end
+    stats
   end
 end

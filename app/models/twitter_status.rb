@@ -28,7 +28,7 @@ class TwitterStatus < MongoRecord::Base
     options[:per_page] = options[:per_page].to_i
     options[:page] = options[:page].to_i
     
-    @tweets = TwitterStatus.find(:all, :conditions=>{:text=>/#{options[:q]}/, :from_user=>/#{options[:screen_names]}/}, :order => "status_id DESC").to_a
+    @tweets = TwitterStatus.find(:all, :conditions=>{:text=>/#{options[:q]}/i, :from_user=>/#{options[:screen_names]}/}, :order => "status_id DESC").to_a
 
     @tweets.paginate(:page => options[:page], :per_page => options[:per_page])
   end

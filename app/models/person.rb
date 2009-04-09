@@ -125,33 +125,33 @@ class Person < MongoRecord::Base
     options[:page] = options[:page].to_i
     
     if %w{statuses_count followers_count}.include?(options[:sort])
-      @people = Person.search(options).sort_by{|p| p[options[:sort]].to_i}
+      @people = Person.find(:all, :conditions=>{:first_name=>/#{options[:q]}/i}).sort_by{|p| p[options[:sort]].to_i}
     else
-      @people = Person.search(options).sort_by{|p| p[options[:sort]].to_s}
+      @people = Person.find(:all, :conditions=>{:first_name=>/#{options[:q]}/i}).sort_by{|p| p[options[:sort]].to_s}
     end
     @people.reverse! unless (options[:reverse].to_s == "true" or options[:reverse].blank?)
     @people.paginate(:page => options[:page], :per_page => options[:per_page])
   end
   
   def self.search(options={})
-    @people = Rails.cache.fetch('people', :expires_in => 60*60*6) {Person.all}
+    @people = Person.find(:all)
     @people = @people.select{|p| p.display_name.downcase.include?(options[:q]) } unless options[:q].blank?
     @people
   end
   
   def self.most_followers_last_seven_days
-    people_with_stats =  Person.all.select{|p| !p.stats.nil?}
+    people_with_stats =  Person.find(:all, :select=>[:profile_image_url, :first_name, :last_name, :stats]).select{|p| !p.stats.nil?}
     people_with_stats.sort_by{|p| p.stats.followers_change_last_seven_days.to_i}.reverse[0..9].map{|p| [p, p.stats.followers_change_last_seven_days]}.reverse
   end
   
   def self.most_followers_last_thirty_days
-    people_with_stats =  Person.all.select{|p| !p.stats.nil?}
+    people_with_stats =  Person.find(:all, :select=>[:profile_image_url, :first_name, :last_name, :stats]).select{|p| !p.stats.nil?}
     people_with_stats.sort_by{|p| p.stats.followers_change_last_thirty_days.to_i}.reverse[0..9].map{|p| [p, p.stats.followers_change_last_thirty_days]}.reverse
   end
 
   def generate_unique_id
     unique_id = self.display_name.to_url
-    people = Person.all.select {|person| person.id.include?(unique_id)}
+    people = Person.find(:all).select {|person| person.id.include?(unique_id)}
     if people.empty?
       unique_id
     else
