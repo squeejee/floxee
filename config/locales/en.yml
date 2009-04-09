@@ -117,5 +117,6 @@ en:
   asc: ASC
   desc: DESC
   per_page: Per page
+  follow: Follow
   you_are_now_following: "You are now following {{name}}"
   you_are_no_longer_following: "You are no longer following {{name}}"
