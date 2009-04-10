@@ -8,8 +8,8 @@ class MainController < ApplicationController
   
   def tweetstream
     @page_title = t('tweetstream')
-    opts = {:page => params[:page], :order => 'statuses.id DESC', :include => :user}
-    opts[:conditions] = ["statuses.text like ?", "%#{params[:q]}%"] unless params[:q].blank?
+    opts = {:page => params[:page], :order => 'statuses.id DESC', :include => :user, :q => params[:q]}
+    #opts[:conditions] = ["statuses.text like ?", "%#{params[:q]}%"] unless params[:q].blank?
     @tweets = Status.paginate opts
   end
   

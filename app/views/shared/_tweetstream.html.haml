@@ -17,7 +17,7 @@
     %li{:class => cycle('', 'alt')}
       = link_to(image_tag(tweet.user.profile_image_url.gsub(/_normal./, '_bigger.'), :size => avatar_size), twitter_user_url(tweet.user.screen_name), :class => 'avatar')
       = detail_link_for_tweet(tweet)
-      = ": #{twitter_auto_link tweet.text}"
+      = ": #{twitter_auto_link highlight(tweet.text, params[:q])}"
       - unless tweet.in_reply_to_status_id.blank? or not show_in_reply
         %a.in-reply-to{:href => twitter_status_path(tweet.in_reply_to_screen_name, tweet.in_reply_to_status_id)}= t('in_reply_to')
         %a.in-reply-to{:href => twitter_user_url(tweet.in_reply_to_screen_name)}= "@#{tweet.in_reply_to_screen_name}"
