@@ -25,7 +25,7 @@ class Admin::PeopleController < ApplicationController
       redirect_to(admin_people_path)
     else
       flash.now[:error] = 'Oops there was a problem saving this person'
-      render :action => "edit" 
+      render :action => "new" 
     end
     
   end
