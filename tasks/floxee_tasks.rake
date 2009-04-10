@@ -25,7 +25,7 @@ namespace :floxee do
   
   desc "Fetch stats from TwitterCounter and FollowCost"
   task :fetch_stats => :environment do
-    User.all.each do |p|
+    Person.all.each do |p|
       p.user.stats.sync if p.user and p.user.stats
     end
   end
