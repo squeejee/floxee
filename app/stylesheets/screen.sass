@@ -159,7 +159,6 @@ body
           :right -5px
 
   #footer
-    :background-color = !dark_blue
     :clear both
     :margin-top 2em
     :padding-bottom 2em
@@ -172,8 +171,7 @@ body
       :padding-top 1.5em
     .footer-left
       :padding 10px
-      :background-color = !lighter_blue
-      :color = !dark_blue
+      :color = !baby_blue
       :-webkit-border-radius 5px
       :-moz-border-radius 5px
       span.text
@@ -184,6 +182,14 @@ body
           :margin-top 9px
         &#floxee
           :margin-top 0px
+    span.tagline
+      :display block
+    h1,h2,h3,h4,h5
+      :color = !baby_blue
+    h3
+      :line-height 40px
+      img
+        :vertical-align middle
     ul
       li
         :list-style none
@@ -207,10 +213,7 @@ body
           :-webkit-border-radius 5px
           &:hover
             :background-color = !dark_blue
-  #features
-    :font-size 150%
-    :margin-top 20px
-    #getstarted
+  
 
 
   .tweetstream
@@ -498,7 +501,11 @@ body
       :font-size 1.3em
       :text-align center
       :display block
-        
+    &.right-icon
+      img
+        :float right
+        :margin-right 0
+        :margin-left 5px
     img
       :float left
       :margin-right 5px
