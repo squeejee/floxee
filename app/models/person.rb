@@ -48,6 +48,12 @@ class Person < MongoRecord::Base
     not self.screen_name.blank?
   end
   
+  def fetch_all_twitter_info
+    fetch_info
+    fetch_stats
+    fetch_latest_statuses
+  end
+  
   def fetch_info
     unless self.screen_name.nil?
       begin
@@ -141,12 +147,12 @@ class Person < MongoRecord::Base
   
   def self.most_followers_last_seven_days
     people_with_stats =  Person.find(:all, :select=>[:profile_image_url, :first_name, :last_name, :stats]).select{|p| !p.stats.nil?}
-    people_with_stats.sort_by{|p| p.stats.followers_change_last_seven_days.to_i}.reverse[0..9].map{|p| [p, p.stats.followers_change_last_seven_days]}.reverse
+    people_with_stats.sort_by{|p| p.stats.followers_change_last_seven_days.to_i}.reverse[0..9].map{|p| [p, p.stats.followers_change_last_seven_days]}
   end
   
   def self.most_followers_last_thirty_days
     people_with_stats =  Person.find(:all, :select=>[:profile_image_url, :first_name, :last_name, :stats]).select{|p| !p.stats.nil?}
-    people_with_stats.sort_by{|p| p.stats.followers_change_last_thirty_days.to_i}.reverse[0..9].map{|p| [p, p.stats.followers_change_last_thirty_days]}.reverse
+    people_with_stats.sort_by{|p| p.stats.followers_change_last_thirty_days.to_i}.reverse[0..9].map{|p| [p, p.stats.followers_change_last_thirty_days]}
   end
 
   def generate_unique_id

@@ -1,8 +1,3 @@
-- unless @person.errors.empty?
-  %ul.errors
-    - @person.errors.each do |error|
-      %li= error
-
 %h1= t("editing_person")
 
 - form_tag(admin_person_path(@person.id), :method => :put, :class => 'detail') do

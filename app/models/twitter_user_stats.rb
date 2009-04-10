@@ -29,7 +29,15 @@ class TwitterUserStats < MongoRecord::Base
   fields :milliscobles_recently
   fields :average_tweets_per_day_recently
   fields :political_index
-        
+    
+  def person
+    contact
+  end
+  
+  def contact
+    Person.find_by_screen_name(self.user_name)
+  end
+  
   def totals
     self.followersperdate.map{|day| [Time.parse(day[0]).to_i*1000, day[1]]}  
   end

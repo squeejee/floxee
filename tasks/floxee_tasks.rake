@@ -20,14 +20,14 @@ namespace :floxee do
   
   desc "Fetch stats from TwitterCounter and FollowCost"
   task :fetch_stats => :environment do
-    Person.all.each do |p|
+    Person.find(:all).each do |p|
       p.stats.fetch if p.stats
     end
   end
   
   desc "Fetch latest Twitter statuses from search api"
   task :fetch_tweets => :environment do
-    Person.all.each do |p|
+    Person.find(:all).each do |p|
       p.fetch_latest_statuses
     end
   end

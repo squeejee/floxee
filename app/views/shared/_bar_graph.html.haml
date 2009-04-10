@@ -1,17 +1,18 @@
-- max = stats.last.last if stats and stats.last and not stats.last.empty?
-- min = stats.first.last if stats and stats.first and not stats.first.empty?
+- max = stats.first.last if stats and stats.first and not stats.first.empty?
+- min = stats.last.last if stats and stats.last and not stats.last.empty?
 - if min and max
-  - height ||= 200
-  - max_width ||= 520.0
-  - scale = height/max.to_f # 300 max height
-  - width = (max_width/stats.length).to_i #520 max width
+  - width ||= 400.0
+  - height ||= 40.0
+  - scale = width/max.to_f # 620 max width
   - spacing = 3
-  - left_margin ||= 35
-  %ul.graph
-    - stats.each_with_index do |info, i|
-      %li{:style => "width: #{width}px;left: #{(i*width)+(i*spacing)+left_margin}px; height:#{info[1].to_f*scale}px", :title => "#{info[1]} #{t('new_followers')}"}
-        %a.tweeter{:href => person_path(info[0].id), :title => info[0].display_name, :style=>"width: #{(width/2)+22}px"}
-          %img{:src => info[0].profile_image_url, :height => 36, :width => 36}
-        = number_with_delimiter(info[1])
-      /%li.bottom{:style => "width: #{width}px;left: #{(i*width)+(i*spacing)+left_margin}px;"}
+  %dl.graph
+    - stats.each do |person, total|
+      %dt
+        %a{:href => person_path(person.id)}
+          = twitter_profile_image(person)
+          = person.display_name
+      %dd{:style => "width: #{total.to_f*scale}px"}
+        %a{:href => person_path(person.id)}
+          = number_with_delimiter(total, :delimiter => ',')
+
   %br.clear
