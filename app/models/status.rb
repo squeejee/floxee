@@ -26,7 +26,7 @@ class Status < ActiveRecord::Base
   
   def self.search(options={})
     #@tweets = Status.cached_by_id
-    @tweets = Status.all
+    @tweets = Status.all(:order => options[:order])
     @tweets = @tweets.select{|t| t.text.downcase.include?(options[:q].downcase) } unless options[:q].blank?
     @tweets
   end
