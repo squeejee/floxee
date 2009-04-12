@@ -28,6 +28,8 @@
        var plot = $.plot($("#graph"), [data], options );
        
        $('a.1w').click(function() {
+         var xMin = #{1.week.ago.beginning_of_day.to_i*1000};
+         var yMin =  findYRange(xMin);
          opts = {
           lines: {
             lineWidth: 1
@@ -36,7 +38,10 @@
             show: true
           },
           xaxis: {
-            min: #{1.week.ago.to_i*1000} 
+            min: xMin
+          },
+          yaxis: {
+            min: yMin
           },
           grid: {
             hoverable: true, 
@@ -48,6 +53,8 @@
        });
        
        $('a.1m').click(function() {
+         var xMin = #{1.month.ago.beginning_of_day.to_i*1000};
+        var yMin =  findYRange(xMin);
          opts = {
           lines: {
             lineWidth: 1
@@ -56,7 +63,10 @@
             show: true
           },
           xaxis: {
-            min: #{1.month.ago.to_i*1000} 
+            min: xMin
+          },
+          yaxis: {
+            min: yMin
           },
           grid: {
             hoverable: true, 
@@ -68,7 +78,16 @@
        });
        
        $('a.90d').click(function() {
-         opts = {xaxis: {min: #{90.days.ago.to_i*1000} } }
+         var xMin = #{90.days.ago.beginning_of_day.to_i*1000};
+         var yMin =  findYRange(xMin);
+         opts = {
+          xaxis: {
+            min: xMin
+          },
+          yaxis: {
+            min: yMin
+          }
+         }
          plotTimeSelection(opts, $(this));
          return false;
        });
@@ -79,6 +98,13 @@
          return false;
        });
        
+       function findYRange(xMin) {
+         var startDate = $.grep(data, function(item, index) {
+           return item[0] == xMin;
+         });
+         console.log(startDate);
+         return (startDate[0][1]);
+       }
        
        function plotTimeSelection(opts,link) {
          var defaults = {};
