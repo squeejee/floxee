@@ -14,12 +14,13 @@ class MainController < ApplicationController
   end
   
   def stats
-    @most_followed = Person.all :include => :user, :order => 'users.followers_count desc', :limit => 5 
-    @most_active = Person.all :include => :user, :order => 'users.statuses_count desc', :limit => 5 
+    @most_followed = Person.all :joins => :user, :order => 'users.followers_count desc', :limit => 5 
+    @most_active = Person.all :joins => :user, :order => 'users.statuses_count desc', :limit => 5 
     
-    @most_new_seven_days = Person.all(:include => {:user => :stats}, :order => 'stats.followers_change_last_seven_days desc', :limit => 5).map{|p| [p, p.user.stats.followers_change_last_seven_days]}
-    @most_new_thirty_days = Person.all(:include => {:user => :stats}, :order => 'stats.followers_change_last_thirty_days desc', :limit => 5).map{|p| [p, p.user.stats.followers_change_last_thirty_days]}
+    @most_new_seven_days = Person.all(:joins => {:user => :stats}, :order => 'stats.followers_change_last_seven_days desc', :limit => 5).map{|p| [p, p.user.stats.followers_change_last_seven_days]}
+    @most_new_thirty_days = Person.all(:joins => {:user => :stats}, :order => 'stats.followers_change_last_thirty_days desc', :limit => 5).map{|p| [p, p.user.stats.followers_change_last_thirty_days]}
   end
+
   
   protected
 
