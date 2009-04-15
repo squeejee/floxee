@@ -1,0 +1,7 @@
+.toolbar.fr
+  %a.button.primary{:href => sync_admin_user_path(@user)} 
+    = icon('arrow_circle_double_135')
+    Sync now
+%h1= @user.name
+= render :partial => "users/twitter_info"
+%h4== Last synced: #{time_ago_in_words(@user.last_synced_at)} ago

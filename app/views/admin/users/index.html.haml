@@ -3,7 +3,8 @@
 = render :partial => 'shared/search_filter'
 #people
   - unless @users.empty?
-
+    .pagination-info= page_entries_info @users    
+    = will_paginate @users
     %br.clear
     %table.people.floxee-admin.index
       %tr
@@ -13,7 +14,9 @@
 
       - for user in @users
         %tr{:class => cycle('', 'alt')}
-          %td.name= user.name
+          %td.name
+            %h4= link_to(user.name, edit_admin_user_path(user))
+            %p= twitter_auto_link(user.description)
           %td.name= user.login
           %td.name
             - form_for([:admin, user], :method => :put) do |f|

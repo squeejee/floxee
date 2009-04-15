@@ -1,11 +1,14 @@
 class Admin::UsersController < ApplicationController
   
-  before_filter :find_user, :only => [:edit, :update, :destroy]
+  before_filter :find_user, :only => [:edit, :update, :destroy, :sync]
   before_filter :login_required
   
   def index    
     @page_title = t('user_admin')
-    @users = User.all
+    opts = { :page => params[:page], :order => 'users.followers_count DESC', :per_page => params[:per_page] }
+    opts[:order] = params[:sort] unless params[:sort].blank?
+    opts[:conditions] = ["users.name like ? or users.description like ? ", "%#{params[:q]}%","%#{params[:q]}%"] unless params[:q].blank?
+    @users = User.paginate opts
     
     render :layout => false if request.xhr?
   end
@@ -32,6 +35,12 @@ class Admin::UsersController < ApplicationController
       format.html # show.html.erb
       format.xml  { render :xml => @user }
     end
+  end
+  
+  def sync
+    @user.sync
+    flash[:notice] = "Manually synced #{@user.name}"
+    redirect_to edit_admin_user_path(@user)
   end
   
   # PUT /admin/people/chris-lee

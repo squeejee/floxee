@@ -69,7 +69,7 @@ module FloxeeHelper
     # elsif tweet.organization
     #       link_to tweet.organization.display_name, organization_path(tweet.organization), :class => 'username', :title => tweet.organization.display_name
     else
-      link_to tweet.user.screen_name, twitter_user_url(tweet.user.screen_name), :class => 'username', :title => tweet.user.name
+      link_to tweet.user.screen_name, user_path(tweet.user), :class => 'username', :title => tweet.user.name
     end
   end
   
