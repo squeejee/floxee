@@ -1,0 +1,29 @@
+- user ||= @user
+- user = @person.user if @person and user.nil?
+- user = @organization.user if @organization and user.nil?
+
+
+%ul#graph-presets
+  %li.selected
+    %a.max{:href => "#"}= t('maximum')
+  %li
+    %a.90d{:href => "#"}= t('ninety_days')
+  %li
+    %a.1m{:href => "#"}= t('one_month')
+  %li
+    %a.1w{:href => "#"}= t('one_week')
+%h3
+  = t('follower_stats_by')
+  = link_to('TwitterCounter', "http://twittercounter.com/#{user.screen_name}")
+#graph
+%dl.span-8
+  %dt= t('followers')
+  %dd= user.stats.followers_current
+  %dt= t('overall_twitter_rank')
+  %dd= user.stats.rank
+  %dt= t('average_growth_per_day')
+  %dd= user.stats.average_growth_2w
+  %dt= t('tomorrows_projection')
+  %dd= user.stats.tomorrow
+  %dt= t('one_month_projection')
+  %dd= user.stats.next_month

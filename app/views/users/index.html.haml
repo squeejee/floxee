@@ -1,12 +1,12 @@
 = render :partial => 'search_form'
-%h1= t('people')
-.people.span-18
-  .pagination-info= page_entries_info(@people)
-  = will_paginate(@people)
+%h1= t('users')
+.users.span-18
+  .pagination-info= page_entries_info(@users)
+  = will_paginate(@users)
   = render :partial => 'shared/search_filter'
-  - unless @people.empty?
-    - @people.each do |person|
-      = render :partial => 'people/person', :locals => {:person => person, :avatar_size => '64x64'}
+  - unless @users.empty?
+    - @users.each do |user|
+      = render :partial => 'users/user', :locals => {:user => user, :avatar_size => '64x64'}
   %br.clear
 .sidebar.span-5.prepend-1.last
   %form.options.box{:method => 'GET'}
@@ -14,7 +14,7 @@
     %label
       = "#{t('sort_by')}:"
       %select{:name => 'sort'}
-        %option{:value => 'people.last_name'}= t('last_name')
+        %option{:value => 'users.name'}= t('name')
         %option{:value => 'users.followers_count'}= t('followers')
     %label
       = "#{t('direction')}:"
@@ -31,4 +31,4 @@
     .form-buttons
       %button.small= t('update')
       = t('or')
-      = link_to t('cancel'), people_path
+      = link_to t('cancel'), users_path

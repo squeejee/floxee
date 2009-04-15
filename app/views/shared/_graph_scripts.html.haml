@@ -1,0 +1,159 @@
+- user ||= @user
+- user = @person.user if @person and user.nil?
+- user = @organization.user if @organization and user.nil?
+
+- content_for :scripts do 
+  :javascript
+    
+     $(function () {
+       var options = {
+         lines: { show: true, lineWidth: 3 },
+         points: { show: false },
+         xaxis: {
+           mode: "time",
+           timeformat: "%m/%d/%y"
+           
+         },
+         colors: ["#85c23f"],
+         grid: {
+           tickColor: "#93BDDB",
+           hoverable: true,
+           clickable: true
+           
+         }
+       };
+       
+       var data = #{user.daily_stats.map{|total| [total.report_date.to_i*1000, total.followers_count]}.reverse.to_json};
+       
+
+       var plot = $.plot($("#graph"), [data], options );
+       
+       $('a.1w').click(function() {
+         var xMin = #{1.week.ago.beginning_of_day.to_i*1000};
+         var yMin =  findYRange(xMin);
+         opts = {
+          lines: {
+            lineWidth: 1
+          },
+          points: {
+            show: true
+          },
+          xaxis: {
+            min: xMin
+          },
+          yaxis: {
+            min: yMin
+          },
+          grid: {
+            hoverable: true, 
+            clickable: true,
+          }
+         };
+         plotTimeSelection(opts, $(this))
+         return false;
+       });
+       
+       $('a.1m').click(function() {
+         var xMin = #{1.month.ago.beginning_of_day.to_i*1000};
+        var yMin =  findYRange(xMin);
+         opts = {
+          lines: {
+            lineWidth: 1
+          },
+          points: {
+            show: true
+          },
+          xaxis: {
+            min: xMin
+          },
+          yaxis: {
+            min: yMin
+          },
+          grid: {
+            hoverable: true, 
+            clickable: true,
+          }
+         };
+         plotTimeSelection(opts, $(this));
+         return false;
+       });
+       
+       $('a.90d').click(function() {
+         var xMin = #{90.days.ago.beginning_of_day.to_i*1000};
+         var yMin =  findYRange(xMin);
+         opts = {
+          xaxis: {
+            min: xMin
+          },
+          yaxis: {
+            min: yMin
+          }
+         }
+         plotTimeSelection(opts, $(this));
+         return false;
+       });
+       
+       $('a.max').click(function() {
+         opts = {xaxis: {min: null } }
+         plotTimeSelection(opts, $(this));
+         return false;
+       });
+       
+       function findYRange(xMin) {
+         var startDate = $.grep(data, function(item, index) {
+           return item[0] == xMin;
+         });
+         return (startDate[0][1]);
+       }
+       
+       function plotTimeSelection(opts,link) {
+         var defaults = {};
+         var opts = $.extend(true, defaults, options, opts);
+         $.plot($("#graph"), [data], opts );
+         $('ul#graph-presets li').removeClass('selected');
+         link.parent('li').addClass('selected');
+       }
+       
+       function showTooltip(x, y, contents) {
+           $('<div id="tooltip">' + contents + '</div>').css( {
+               position: 'absolute',
+               display: 'none',
+               top: y + 5,
+               left: x + 5,
+               color: '#B5DFF8',
+               "-moz-border-radius": "3px",
+               "-webkit-border-radius": "3px",
+               padding: '5px',
+               'background-color': '#142854',
+               opacity: 0.80
+           }).appendTo("body").fadeIn(200);
+       }
+
+       var previousPoint = null;
+       $("#graph").bind("plothover", function (event, pos, item) {
+
+           if (item) {
+               if (previousPoint != item.datapoint) {
+                   previousPoint = item.datapoint;
+
+                   $("#tooltip").remove();
+                   var x = item.datapoint[0].toFixed(2),
+                       y = item.datapoint[1].toFixed(2);
+                   var reportDate = new Date(parseInt(x)).toLocaleDateString();;
+                   var followerCount = parseInt(y);
+                   showTooltip(item.pageX, item.pageY, "<b>"+followerCount+"</b> followers on "+reportDate);
+               }
+           }
+           else {
+               $("#tooltip").remove();
+               previousPoint = null;            
+           }
+       });
+
+       $("#graph").bind("plotclick", function (event, pos, item) {
+           if (item) {
+               $("#clickdata").text("You clicked point " + item.dataIndex + " in " + item.series.label + ".");
+               plot.highlight(item.series, item.datapoint);
+           }
+       });
+     });

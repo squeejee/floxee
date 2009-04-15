@@ -52,6 +52,7 @@ en:
   updates: Updates
   person_is_on_twitter: "{{name}} is on Twitter"
   person_is_not_on_twitter: "{{name}} is not on Twitter"
+  user_is_on_twitter: "{{name}} is on Twitter"
   you_can_help_change_that: You can help change that
   sign_the_petition: Sign the petition!
   and_we_will_add_your_name_below: And we'll add your name below

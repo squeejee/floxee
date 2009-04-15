@@ -2,13 +2,25 @@ class User < TwitterAuth::GenericUser
   # Extend and define your user model as you see fit.
   # All of the authentication logic is handled by the 
   # parent TwitterAuth::GenericUser class.
+  
+  has_friendly_id :login
+  
 
   has_one :stats, :class_name => "Stats", :dependent => :destroy
   has_many :daily_stats, :class_name => "DailyStats", :order => 'report_date ASC', :dependent => :destroy
   has_many :statuses, :order => 'id DESC', :dependent => :destroy
   
+  has_one :person
+  
   named_scope :synced, :conditions => ['last_synced_at IS NOT NULL']
   
+  def display_name
+    if self.person
+      person.display_name
+    else
+      self.name
+    end
+  end
   
   def screen_name
     self.login
@@ -35,7 +47,9 @@ class User < TwitterAuth::GenericUser
   end
   
   def fetch_latest_statuses
-    self.fetch_statuses(1, self.statuses.maximum(:id))
+    since_id = self.statuses.maximum(:id)
+    since_id ||= 1
+    self.fetch_statuses(1, since_id)
   end
   
   def fetch_statuses(page=1, since_id=1)
@@ -96,8 +110,9 @@ class User < TwitterAuth::GenericUser
           status.save
         end
         tweets.size
-      rescue Grackle::TwitterError
+      rescue Grackle::TwitterError => ex
         RAILS_DEFAULT_LOGGER.error "Could not retrieve statuses for  #{self.screen_name}"
+        RAILS_DEFAULT_LOGGER.error ex.message
       end
     end
 end

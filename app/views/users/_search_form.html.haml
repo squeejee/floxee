@@ -1,0 +1,4 @@
+.search-form
+  %form{:method => 'GET'}
+    %input.title.prompt{:name => 'q', :title => t('search_by_name'), :value => params[:q]}
+    %button= t("search")

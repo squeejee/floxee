@@ -6,13 +6,12 @@
   - scale = width/max.to_f # 620 max width
   - spacing = 3
   %dl.graph
-    - stats.each do |person, total|
+    - stats.each do |user, total|
       %dt
-        %a{:href => person_path(person.id)}
-          = twitter_profile_image(person)
-          = person.display_name
+        %a{:href => detail_path_for_user(user)}
+          = twitter_profile_image(user)
+          = user.name
       %dd{:style => "width: #{total.to_f*scale}px"}
-        %a{:href => person_path(person.id)}
-          = number_with_delimiter(total, :delimiter => ',')
+        = detail_link_for_user(user, "(#{number_with_delimiter(total, :delimiter => ',')})")
         
   %br.clear

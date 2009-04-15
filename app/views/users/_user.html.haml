@@ -1,0 +1,16 @@
+- user ||= @user
+- avatar_size ||= "48x48"
+.user.vcard{:id => "user-#{user.id}"}
+  .more-info.stats
+    %a{:href => user_path(user)}
+      = image_tag("/images/chart-icon.png") 
+      %small= t('stats')
+  .more-info
+    %a{:href => user_path(user)}
+      = user.followers_count.to_i 
+      %small= t('followers')
+  .more-info.first= follow_user_link(user)
+  %a.avatar{:href => user_path(user.id)}
+    = twitter_profile_image(user) 
+  %h3.snug= link_to user.name, user_path(user), :class => 'fn url'
+  %p.bio= user.description 

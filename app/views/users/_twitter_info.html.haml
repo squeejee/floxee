@@ -1,0 +1,22 @@
+- user ||= @user
+- avatar_size ||= "48x48"
+.twitter-info
+  %a.avatar{:href => twitter_user_url(user.screen_name)}
+    - unless user.profile_image_url.blank?
+      = image_tag(user.profile_image_url.gsub(/_normal./, '_bigger.'), :class => 'profile-image', :size => avatar_size)
+  %h3
+    %a.twitter-username{:href => twitter_user_url(user.screen_name)}= user.screen_name
+  %ul.stats
+    %li.following
+      %a{:href => twitter_user_friends_url(user.screen_name)}
+        = user.friends_count
+        %span following
+    %li.followers
+      %a{:href => twitter_user_followers_url(user.screen_name)}
+        = user.followers_count
+        %span followers
+    %li.updates
+      %a{:href => twitter_user_url(user.screen_name)}
+        = user.statuses_count
+        %span updates
+  %br.clear

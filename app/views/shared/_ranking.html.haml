@@ -2,4 +2,4 @@
 %ol.ranking
   - tweeters.each do |tweeter|
     - total = tweeter.send(stat_field.to_sym)
-    %li= link_to "#{tweeter.display_name} (#{number_with_delimiter(total)}) ", person_path(tweeter.id)
+    %li= detail_link_for_user(tweeter, "#{tweeter.display_name} (#{number_with_delimiter(total)})")

@@ -42,14 +42,41 @@ module FloxeeHelper
     image_tag(user_profile_image_path(size), options)
   end
   
+  def detail_link_for_user(user, text=user.display_name)
+    if user.person
+      link_to text, detail_path_for_user(user), :class => 'username', :title => user.person.display_name
+      
+    # elsif user.organization
+    #       link_to "#{user.organization.display_name} #{extra_text}", detail_path_for_user(user), :class => 'username', :title => user.organization.display_name
+    else
+      link_to text, detail_path_for_user(user)
+    end
+  end
+  
+  def detail_path_for_user(user)
+    if user.person
+      person_path(user.person)
+    # elsif user.organization
+    #   organization_path(user.organization)
+    else
+      user_path(user)
+    end
+  end
+  
   def detail_link_for_tweet(tweet)
     if tweet.person
-      link_to tweet.person.display_name, person_path(tweet.person)
-    elsif tweet.organization
-      link_to tweet.organization.display_name, organization_path(tweet.organization)
+      link_to tweet.person.display_name, person_path(tweet.person), :class => 'username', :title => tweet.person.display_name
+    # elsif tweet.organization
+    #       link_to tweet.organization.display_name, organization_path(tweet.organization), :class => 'username', :title => tweet.organization.display_name
     else
-      link_to tweet.user.screen_name, twitter_user_url(tweet.user.screen_name)
+      link_to tweet.user.screen_name, twitter_user_url(tweet.user.screen_name), :class => 'username', :title => tweet.user.name
     end
+  end
+  
+  def follow_user_link(user, text=t('follow'), options={})
+    opts = {:class => 'button small dark'}
+    opts.merge!(options)
+    link_to(text, follow_user_path(user), opts) unless (logged_in? and current_user == user)
   end
   
   def follow_person_link(person, text=t('follow'), options={})
