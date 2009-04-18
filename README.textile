@@ -1,0 +1,7 @@
+h2. Floxee - a Twitter directory for the birds
+
+docs pending!
+
+In the meanwhile, use the Rails 2.3 template to unfold a new floxee app:
+
+  rails my_twitter_folks -d mysql -m http://github.com/squeejee/rails-templates/raw/74fc8a4d41163716b001cb5f6ddbe6bc1eee18a4/floxee.rb
